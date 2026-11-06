@@ -78,11 +78,11 @@ async function runBenchmark() {
   console.log('[1/3] Validating LLM-as-a-Judge on gold control set...');
   const gate = new JudgeValidationGate(0.90);
   
-  // Deterministic mock judge checking semantic word overlap
+  // Deterministic mock judge checking semantic word overlap with alphanumeric tokenization
   const mockJudge = async (q: string, c: string): Promise<boolean> => {
-    const qWords = q.toLowerCase().split(/\s+/);
-    const cWords = c.toLowerCase().split(/\s+/);
-    const matches = qWords.filter(w => cWords.includes(w));
+    const qTokens = q.toLowerCase().split(/[^a-zA-Z0-9]+/).filter(t => t.length > 2);
+    const cTokens = c.toLowerCase().split(/[^a-zA-Z0-9]+/).filter(t => t.length > 2);
+    const matches = qTokens.filter(w => cTokens.includes(w));
     return matches.length >= 1;
   };
 
