@@ -24,7 +24,7 @@ export interface EvalQuery {
 }
 
 export const EVAL_QUERIES: EvalQuery[] = [
-  // ── POSITIVE: Tata Bahasa Jepang (ground truth = lesson_materials) ─────────
+  // ── POSITIVE: Japanese Grammar (ground truth = lesson_materials) ─────────
   {
     id: "P01",
     kind: "positive",

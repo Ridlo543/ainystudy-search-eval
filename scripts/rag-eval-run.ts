@@ -124,7 +124,7 @@ async function embedQuery(text: string): Promise<number[]> {
     });
     if (res.ok) {
       const data = await res.json();
-      const values = data.data?.[0]?.embedding || data.embedding?.values;
+      const values = data.data?.[0]?.embedding ?? data.result?.data?.[0] ?? data.embedding?.values;
       if (!Array.isArray(values) || values.length !== DIMS) {
         throw new Error(`Invalid embedding vector dimension: received ${values?.length}, expected ${DIMS}`);
       }
@@ -561,13 +561,11 @@ async function main() {
     const negFalseGround =
       judgedQueries.filter((r) => r.kind !== "positive" && r.groundedChunkCount > 0).length /
       Math.max(1, judgedQueries.filter((r) => r.kind !== "positive").length);
-
-    // Persist raw execution artifact
+    // Persist raw benchmark execution artifact
     const embStats = stats(samples.map((s) => s.embeddingMs));
     const dbStats = stats(samples.map((s) => s.dbMs));
     const totalStats = stats(samples.map((s) => s.totalMs));
 
-    // Simpan hasil mentah
     const outDir = "docs/rag-eval";
     mkdirSync(outDir, { recursive: true });
     const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
