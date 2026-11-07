@@ -8,16 +8,13 @@ Engineering methodology and reproduction notes for the AinyStudy vector retrieva
 - Query dataset: `scripts/rag-eval-dataset.ts`
 - Benchmark log: `docs/rag-eval/benchmark-results.json`
 
-### Run Command
+### Environment Requirements
 
-```bash
-# Run benchmark against PostgreSQL pgvector instance
-pnpm exec tsx scripts/rag-eval-run.ts
+The evaluation runner connects to a PostgreSQL database containing the populated `rag_eval_corpus` table and requires configured environment variables:
+- `DATABASE_URL`: Connection string to PostgreSQL 16 with `pgvector` extension.
+- `EMBEDDING_API_URL`: Embedding API endpoint (Cloudflare Workers AI BGE-M3 or OpenAI-compatible).
 
-# Run retrieval and latency timing without LLM judge
-pnpm exec tsx scripts/rag-eval-run.ts --skip-judge
-```
-
+For offline inspection without connecting to live database infrastructure, the complete verified execution payload is committed directly to `docs/rag-eval/benchmark-results.json`.
 ---
 
 ## 1. Corpus Configuration
