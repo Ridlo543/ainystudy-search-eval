@@ -1,17 +1,10 @@
 /**
- * Dataset evaluasi RAG — versi ketat (rigorous).
+ * Evaluation dataset for RAG retrieval benchmarking.
  *
- * Prinsip anti-leakage:
- * 1. Ground truth dipilih berdasarkan INSPEKSI ISI chunk (SQL + baca penjelasan),
- *    bukan dengan menyalin teks chunk menjadi kueri.
- * 2. Kueri ditulis dari sudut pandang pelajar: bahasa Indonesia colloquial, typo,
- *    campur istilah Jepang. TIDAK menyalin frasa chunk.
- * 3. Kueri negatif diverifikasi KEABSahanAN ketiadaan lewat multi-pola pencarian
- *    di seluruh tabel korpus sebelum dipakai.
- * 4. Near-miss: ground truth spesifik + chunk pembingkai (confusable) ada di korpus.
- *
- * Kueri negatif hanya dinyatakan valid jika jumlah match seluruh pola = 0,
- * atau (tipe "unanswerable") chunk terdekat membahas pola lain yang mirip.
+ * Query design notes:
+ * 1. Positive queries: realistic conversational questions paired with verified ground-truth chunk IDs.
+ * 2. Negative queries: verified absent from the 2,487-chunk database to test false-positive retrieval.
+ * 3. Near-miss queries: specifically paired with confusable chunks to evaluate disambiguation accuracy.
  */
 
 export type QueryKind = "positive" | "negative" | "unanswerable";

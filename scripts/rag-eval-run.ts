@@ -1,22 +1,14 @@
 /**
- * Runner benchmark evaluasi RAG — versi ketat.
+ * Retrieval and evaluation runner for pgvector benchmark suite.
  *
- * Perbedaan dari versi lemah sebelumnya:
- *   1. Korpus 2.487 chunk RIIL dari DB produksi (bukan 26 chunk sintetis).
- *   2. Kueri gaya pelajar riil (colloquial, typo) — TIDAK disalin dari teks chunk.
- *   3. Ada 6 kueri negatif (terverifikasi tidak ada di korpus) + 1 unanswerable.
- *   4. Near-miss: ground truth spesifik dengan chunk pembingkai di korpus.
- *   5. Judge LLM DIVALIDASI lebih dulu lewat control set berlabel; kalau judge
- *      tidak diskriminatif, verdictnya ditolak dan dilaporkan.
- *   6. Latency diukur 3 iterasi × 31 kueri = 93 sampel, embedding & DB dipisah.
- *   7. Indeks HNSW diverifikasi terhadap brute-force cosine di Node.
- *   8. Hit-rate dilengkapi Wilson 95% CI.
- *
- * Judge: coba model jev dari router lebih dulu; bila tidak tersedia (terbukti
- * 503/timeout), fallback ke gemini-3.8-flash-high di router yang sama.
+ * Execution flow:
+ *   1. Optional LLM judge pre-validation using labeled control pairs.
+ *   2. Retrieval across all evaluation queries (repeated over multiple iterations).
+ *   3. Independent latency tracking: remote embedding latency vs local pgvector query time.
+ *   4. Metrics calculation: Hit@1, Hit@3, Hit@5 with Wilson 95% CI, MRR, NDCG@5, and Groundedness.
  *
  * Usage:
- *   pnpm exec tsx scripts/rag-eval-run.ts [--judge jev-1.13|openjev|gemini-3.8-flash-high] [--skip-judge]
+ *   pnpm exec tsx scripts/rag-eval-run.ts [--skip-judge]
  */
 import postgres from "postgres";
 import { writeFileSync, mkdirSync } from "node:fs";
