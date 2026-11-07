@@ -14,10 +14,11 @@ import postgres from "postgres";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { EVAL_QUERIES, type EvalQuery } from "./rag-eval-dataset";
 
-const DB_URL = process.env.RAG_EVAL_DATABASE_URL || process.env.DATABASE_URL || "";
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const ROUTER_KEY = process.env.AINYLINGO_LLM_API_KEY || "";
-const ROUTER_URL = "https://router.ainything.online/v1/chat/completions";
+const DB_URL = process.env.DATABASE_URL || "";
+const EMBEDDING_API_KEY = process.env.EMBEDDING_API_KEY || process.env.GEMINI_API_KEY || "";
+const EMBEDDING_API_URL = process.env.EMBEDDING_API_URL || (EMBEDDING_API_KEY ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${EMBEDDING_API_KEY}` : "");
+const JUDGE_API_KEY = process.env.JUDGE_API_KEY || process.env.LLM_API_KEY || "";
+const JUDGE_API_URL = process.env.JUDGE_API_URL || "";
 const DIMS = 768;
 const ITERATIONS = 3;
 const TOP_K = 5;
@@ -105,15 +106,15 @@ function wilsonCI(successes: number, n: number, z = 1.96): { low: number; high: 
 
 // ── embedding ───────────────────────────────────────────────────────────────
 async function embedQuery(text: string): Promise<number[]> {
+  if (!EMBEDDING_API_URL) {
+    throw new Error("EMBEDDING_API_URL or EMBEDDING_API_KEY environment variable is not configured");
+  }
   for (let attempt = 1; attempt <= 4; attempt++) {
-    const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${GEMINI_API_KEY}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: { parts: [{ text }] }, outputDimensionality: DIMS }),
-      },
-    );
+    const res = await fetch(EMBEDDING_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content: { parts: [{ text }] }, outputDimensionality: DIMS }),
+    });
     if (res.ok) {
       const data = await res.json();
       const values = data.embedding?.values;
@@ -232,12 +233,17 @@ async function callJudge(
 ): Promise<{ grounded: boolean; precision: number; reason: string }> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), JUDGE_TIMEOUT_MS);
+  if (!JUDGE_API_URL) {
+    throw new Error("JUDGE_API_URL environment variable is not configured");
+  }
   try {
-    const res = await fetch(ROUTER_URL, {
+    const res = await fetch(JUDGE_API_URL, {
       method: "POST",
       signal: controller.signal,
-      headers: { Authorization: `Bearer ${ROUTER_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
+      headers: {
+        ...(JUDGE_API_KEY ? { Authorization: `Bearer ${JUDGE_API_KEY}` } : {}),
+        "Content-Type": "application/json",
+      },
         model,
         messages: [
           {
