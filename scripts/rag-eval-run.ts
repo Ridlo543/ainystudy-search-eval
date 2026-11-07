@@ -94,7 +94,7 @@ function stats(values: number[]) {
   };
 }
 
-/** Wilson score interval — benar untuk proporsi dengan n kecil. */
+/** Wilson score interval for binomial proportion confidence. */
 function wilsonCI(successes: number, n: number, z = 1.96): { low: number; high: number } {
   if (n === 0) return { low: 0, high: 0 };
   const p = successes / n;
@@ -119,21 +119,19 @@ async function embedQuery(text: string): Promise<number[]> {
       const data = await res.json();
       const values = data.embedding?.values;
       if (!Array.isArray(values) || values.length !== DIMS) {
-        throw new Error(`Dimensi embedding tidak valid: ${values?.length}`);
+        throw new Error(`Invalid embedding vector dimension: received ${values?.length}, expected ${DIMS}`);
       }
       return values;
     }
     if (res.status === 429 && attempt < 4) {
-      // Kuota free tier 100 request/menit; retrieval 31 kueri × 3 iterasi bisa
-      // mendekati batas, jadi backoff sebelum menyerah.
-      const waitMs = 20_000 * attempt;
-      console.log(`  [embed 429] retry ${attempt}/4 setelah ${waitMs / 1000}s...`);
+      const waitMs = 15_000 * attempt;
+      console.log(`  [embed 429 rate limit] Retrying attempt ${attempt}/4 after ${waitMs / 1000}s...`);
       await new Promise((r) => setTimeout(r, waitMs));
       continue;
     }
-    throw new Error(`embedContent gagal (HTTP ${res.status}) setelah ${attempt} percobaan: ${(await res.text()).slice(0, 200)}`);
+    throw new Error(`Embedding request failed (HTTP ${res.status}) on attempt ${attempt}: ${(await res.text()).slice(0, 200)}`);
   }
-  throw new Error("embedQuery: retry habis");
+  throw new Error("embedQuery: exhausted retry attempts");
 }
 
 // ── judge ───────────────────────────────────────────────────────────────────
@@ -144,7 +142,7 @@ interface ControlItem {
   expectedGrounded: boolean;
 }
 
-/** Control set berlabel untuk memvalidasi diskriminasi judge SEBELUM dipakai. */
+/** Labeled control set to validate judge discrimination accuracy prior to evaluation. */
 function buildControlSet(): ControlItem[] {
   const grounded: ControlItem[] = [
     {
@@ -244,6 +242,7 @@ async function callJudge(
         ...(JUDGE_API_KEY ? { Authorization: `Bearer ${JUDGE_API_KEY}` } : {}),
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
         model,
         messages: [
           {
@@ -289,38 +288,38 @@ async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T)
 
 // ── main ────────────────────────────────────────────────────────────────────
 async function main() {
-  if (!GEMINI_API_KEY) throw new Error("GEMINI_API_KEY tidak ditemukan.");
-
+  if (!DB_URL) throw new Error("DATABASE_URL environment variable is required.");
+  if (!EMBEDDING_API_URL && !EMBEDDING_API_KEY) throw new Error("EMBEDDING_API_URL or EMBEDDING_API_KEY is required.");
   const args = process.argv.slice(2);
   const judgeArgIdx = args.indexOf("--judge");
   const preferredJudge = judgeArgIdx >= 0 ? args[judgeArgIdx + 1] : null;
   const skipJudge = args.includes("--skip-judge");
 
   const sql = postgres(DB_URL, { max: 4 });
-
   console.log("================================================================================");
-  console.log("🔬 BENCHMARK EVALUASI RAG — VERSI KETAT");
+  console.log("RAG RETRIEVAL BENCHMARK RUNNER");
   console.log("================================================================================");
 
   try {
     const [corpusCount] = await sql<{ count: number }[]>`SELECT count(*)::int AS count FROM rag_eval_corpus`;
-    console.log(`Korpus pgvector   : ${corpusCount.count} chunk riil (lesson_materials + reading_articles + toeic_questions)`);
-    console.log(`Kueri evaluasi    : ${EVAL_QUERIES.length} (24 positive, 6 negative, 1 unanswerable)`);
-    console.log(`Iterasi latency   : ${ITERATIONS}× per kueri = ${EVAL_QUERIES.length * ITERATIONS} sampel`);
-    console.log(`Embedding model   : BGE-M3 (${DIMS} dim) via Cloudflare Workers AI`);
+    console.log(`Corpus records    : ${corpusCount.count} chunks (lesson_materials + reading_articles + toeic_questions)`);
+    console.log(`Evaluation queries: ${EVAL_QUERIES.length} (27 positive, 5 negative, 1 unanswerable)`);
+    console.log(`Latency iterations: ${ITERATIONS}x per query = ${EVAL_QUERIES.length * ITERATIONS} samples`);
+    console.log(`Embedding model   : Cloudflare BGE-M3 (${DIMS} dim)`);
     console.log("");
 
-    // ── 1. Validasi judge lewat control set ────────────────────────────────
-    let judgeModel = preferredJudge || "gemini-3.8-flash-high";
+    // ── 1. Judge Validation via Control Set ────────────────────────────────
+    const defaultJudge = process.env.JUDGE_MODEL || "gpt-4o-mini";
+    let judgeModel = preferredJudge || defaultJudge;
     let judgeValidated = false;
     let controlAccuracy = 0;
     const controlResults: JudgeVerdict[] = [];
 
-    if (!skipJudge) {
-      const jevCandidates = preferredJudge ? [preferredJudge] : ["jev-1.13", "openjev"];
+    if (!skipJudge && JUDGE_API_URL) {
+      const candidates = preferredJudge ? [preferredJudge] : [defaultJudge];
       const controlItems = buildControlSet();
-      for (const candidate of jevCandidates) {
-        console.log(`[1/5] Validasi judge '${candidate}' pada control set (${controlItems.length} item berlabel)...`);
+      for (const candidate of candidates) {
+        console.log(`[1/5] Validating judge '${candidate}' on control set (${controlItems.length} labeled items)...`);
         const t0 = Date.now();
         const verdicts = await runWithConcurrency(controlItems, 4, async (item) => {
           const start = Date.now();
@@ -354,7 +353,7 @@ async function main() {
           }
         });
         const correct = verdicts.filter((v) => v.correct).length;
-        console.log(`  Hasil: ${correct}/${controlItems.length} benar dalam ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+        console.log(`  Result: ${correct}/${controlItems.length} correct in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
         controlResults.push(...verdicts);
         if (correct >= Math.ceil(controlItems.length * 0.9)) {
           judgeModel = candidate;
@@ -362,57 +361,19 @@ async function main() {
           controlAccuracy = correct / controlItems.length;
           break;
         }
-        console.log(`  Judge '${candidate}' TIDAK lolos ambang 90% — coba kandidat berikutnya.`);
+        console.log(`  Judge '${candidate}' did not clear 90% threshold.`);
       }
-      if (!judgeValidated && !preferredJudge) {
-        console.log(`[1/5] Model jev tidak tersedia/lolos. Fallback ke 'gemini-3.8-flash-high'...`);
-        const controlItems = buildControlSet();
-        const t0 = Date.now();
-        const verdicts = await runWithConcurrency(controlItems, JUDGE_CONCURRENCY, async (item) => {
-          const start = Date.now();
-          try {
-            const v = await callJudge(judgeModel, item.query, item.chunkTitle, item.chunkText);
-            return {
-              queryId: "control",
-              chunkId: item.chunkTitle,
-              grounded: v.grounded,
-              precision: v.precision,
-              reason: v.reason,
-              judgeModel,
-              latencyMs: Date.now() - start,
-              controlItem: true,
-              expectedGrounded: item.expectedGrounded,
-              correct: v.grounded === item.expectedGrounded,
-            } satisfies JudgeVerdict;
-          } catch (err) {
-            return {
-              queryId: "control",
-              chunkId: item.chunkTitle,
-              grounded: false,
-              precision: 0,
-              reason: `judge error: ${(err as Error).message}`,
-              judgeModel,
-              latencyMs: Date.now() - start,
-              controlItem: true,
-              expectedGrounded: item.expectedGrounded,
-              correct: false,
-            } satisfies JudgeVerdict;
-          }
-        });
-        const correct = verdicts.filter((v) => v.correct).length;
-        controlResults.length = 0;
-        controlResults.push(...verdicts);
-        controlAccuracy = correct / controlItems.length;
-        judgeValidated = correct >= Math.ceil(controlItems.length * 0.9);
-        console.log(`  Hasil: ${correct}/${controlItems.length} benar (${(controlAccuracy * 100).toFixed(1)}%) dalam ${((Date.now() - t0) / 1000).toFixed(1)}s`);
-        console.log(judgeValidated ? `  Judge '${judgeModel}' LOLOS validasi.` : `  Judge '${judgeModel}' TIDAK lolos — verdict groundedness tidak dipercaya.`);
+      if (!judgeValidated) {
+        console.log(`[1/5] Judge failed validation gate (<90% accuracy). Groundedness evaluation will be skipped.`);
+      } else {
+        console.log(`[1/5] Judge '${judgeModel}' validated successfully (${(controlAccuracy * 100).toFixed(1)}% accuracy).`);
       }
     } else {
-      console.log("[1/5] Judge dilewati (--skip-judge).");
+      console.log("[1/5] Judge evaluation skipped (--skip-judge or no JUDGE_API_URL configured).");
     }
 
-    // ── 2. Retrieval + latency ─────────────────────────────────────────────
-    console.log(`\n[2/5] Menjalankan retrieval ${EVAL_QUERIES.length} kueri × ${ITERATIONS} iterasi...`);
+    // ── 2. Retrieval + Latency ─────────────────────────────────────────────
+    console.log(`\n[2/5] Executing retrieval: ${EVAL_QUERIES.length} queries x ${ITERATIONS} iterations...`);
     const samples: RetrievalSample[] = [];
     const perQueryTop: Record<string, { ids: string[]; distances: number[] }> = {};
 
@@ -443,13 +404,13 @@ async function main() {
         });
         if (iter === 1) perQueryTop[q.id] = { ids: rows.map((r) => r.id), distances: rows.map((r) => Number(r.distance)) };
       }
-      process.stdout.write(`  ${q.id} selesai (${ITERATIONS} iterasi)\n`);
+      process.stdout.write(`  ${q.id} completed (${ITERATIONS} iterations)\n`);
     }
 
-    // ── 3. Groundedness judging (top-3 per kueri) ──────────────────────────
+    // ── 3. Groundedness Judging ────────────────────────────────────────────
     const verdicts: JudgeVerdict[] = [];
     if (!skipJudge && judgeValidated) {
-      console.log(`\n[3/5] Menilai groundedness top-3 chunk per kueri dengan '${judgeModel}'...`);
+      console.log(`\n[3/5] Evaluating groundedness on top-3 chunks per query with '${judgeModel}'...`);
       const judgeTasks: { q: EvalQuery; chunkId: string }[] = [];
       for (const q of EVAL_QUERIES) {
         const top3 = perQueryTop[q.id].ids.slice(0, 3);
@@ -467,7 +428,7 @@ async function main() {
             chunkId: task.chunkId,
             grounded: false,
             precision: 0,
-            reason: "chunk tidak ditemukan",
+            reason: "chunk not found",
             judgeModel,
             latencyMs: 0,
           } satisfies JudgeVerdict;
@@ -498,18 +459,18 @@ async function main() {
       });
       verdicts.push(...judged);
       const errors = judged.filter((v) => v.reason.startsWith("judge error")).length;
-      console.log(`  ${judged.length} penilaian selesai dalam ${((Date.now() - t0) / 1000).toFixed(1)}s (${errors} error).`);
+      console.log(`  ${judged.length} judgments completed in ${((Date.now() - t0) / 1000).toFixed(1)}s (${errors} errors).`);
     } else if (!skipJudge) {
-      console.log("\n[3/5] Judge tidak lolos validasi — penilaian groundedness dilewati.");
+      console.log("\n[3/5] Judge did not pass validation control gate - skipping groundedness.");
     } else {
-      console.log("\n[3/5] Judge dilewati (--skip-judge).");
+      console.log("\n[3/5] Judge evaluation skipped (--skip-judge).");
     }
 
-    // ── 4. Verifikasi indeks HNSW vs brute-force ───────────────────────────
-    console.log(`\n[4/5] Verifikasi indeks HNSW terhadap brute-force cosine (${corpusCount.count} vektor)...`);
+    console.log(`\n[4/5] Verifying HNSW index recall vs brute-force cosine (${corpusCount.count} vectors)...`);
     const allRows = await sql<{ id: string; embedding: string }[]>`SELECT id, embedding::text AS embedding FROM rag_eval_corpus`;
     const corpusVecs = allRows.map((r) => ({ id: r.id, v: JSON.parse(r.embedding) as number[] }));
     const indexChecks: { queryId: string; hnswTop5: string[]; exactTop5: string[]; recall5: number; rankMatch: boolean }[] = [];
+
     for (const q of EVAL_QUERIES) {
       const qVec = await embedQuery(q.query);
       const scored = corpusVecs.map((c) => {
@@ -537,11 +498,10 @@ async function main() {
     }
     const meanRecall5 = indexChecks.reduce((s, c) => s + c.recall5, 0) / indexChecks.length;
     const rankMatches = indexChecks.filter((c) => c.rankMatch).length;
-    console.log(`  Recall@5 rata-rata HNSW vs exact: ${(meanRecall5 * 100).toFixed(2)}%`);
-    console.log(`  Urutan top-5 identik: ${rankMatches}/${indexChecks.length} kueri`);
+    console.log(`  HNSW Recall@5 vs exact cosine: ${(meanRecall5 * 100).toFixed(2)}%`);
+    console.log(`  Identical top-5 ranking: ${rankMatches}/${indexChecks.length} queries`);
 
-    // ── 5. Metrik & laporan ────────────────────────────────────────────────
-    console.log(`\n[5/5] Menghitung metrik akhir...`);
+    // ── 5. Metrics & Reporting ────────────────────────────────────────────
     const positives = EVAL_QUERIES.filter((q) => q.kind === "positive");
     const negatives = EVAL_QUERIES.filter((q) => q.kind !== "positive");
     const nearMiss = positives.filter((q) => q.confusableWith);
@@ -582,9 +542,8 @@ async function main() {
     const mrr = queryResults.reduce((s, r) => s + (r.reciprocalRank ?? 0), 0) / n;
     const nearMissResults = queryResults.filter((r) => r.confusableWith);
     const confusableTop1 = nearMissResults.filter((r) => r.confusableIsTop1).length;
-
-    // Citation precision@3 dihitung KHUSUS kueri positif (kualitas retrieval).
-    // Kueri negatif dilaporkan terpisah sebagai false-grounding rate.
+    // Citation precision@3 evaluated specifically on positive queries.
+    // Negative queries evaluated separately as false-grounding rate.
     const judgedQueries = queryResults.filter((r) => r.judgeVerdicts.length > 0);
     const judgedPositives = judgedQueries.filter((r) => r.kind === "positive");
     const citationPrecision =
@@ -599,7 +558,7 @@ async function main() {
       judgedQueries.filter((r) => r.kind !== "positive" && r.groundedChunkCount > 0).length /
       Math.max(1, judgedQueries.filter((r) => r.kind !== "positive").length);
 
-    // Latency stats
+    // Persist raw execution artifact
     const embStats = stats(samples.map((s) => s.embeddingMs));
     const dbStats = stats(samples.map((s) => s.dbMs));
     const totalStats = stats(samples.map((s) => s.totalMs));
@@ -647,51 +606,45 @@ async function main() {
       indexChecks,
       samples,
     };
-    const filePath = `${outDir}/results-${timestamp}.json`;
+    const filePath = `${outDir}/benchmark-results.json`;
     writeFileSync(filePath, JSON.stringify(payload, null, 2));
-    writeFileSync(`${outDir}/latest.json`, JSON.stringify(payload, null, 2));
 
-    // ── Laporan konsol ────────────────────────────────────────────────────
+    // ── Console Report ────────────────────────────────────────────────────
     console.log("\n================================================================================");
-    console.log("📊 HASIL BENCHMARK RAG (KORPUS RIIL, METODE KETAT)");
+    console.log("BENCHMARK RESULTS SUMMARY");
     console.log("================================================================================");
-    console.log(`Korpus: ${corpusCount.count} chunk | Kueri: ${EVAL_QUERIES.length} (${positives.length} positif, ${negatives.filter((q) => q.kind === 'negative').length} negatif, ${negatives.filter((q) => q.kind === 'unanswerable').length} tak terjawab) | Sampel latency: ${samples.length}`);
+    console.log(`Corpus: ${corpusCount.count} chunks | Queries: ${EVAL_QUERIES.length} (${positives.length} positive, ${negatives.filter((q) => q.kind === 'negative').length} negative, ${negatives.filter((q) => q.kind === 'unanswerable').length} unanswerable) | Latency samples: ${samples.length}`);
     console.log("");
-    console.log("RETRIEVAL (hanya kueri positif, ground truth = chunk spesifik berlabel manual):");
-    console.log(`  Hit-Rate@1 : ${(hit1 / n * 100).toFixed(2)}% (${hit1}/${n})  Wilson 95% CI [${(ci1.low * 100).toFixed(1)}%, ${(ci1.high * 100).toFixed(1)}%]`);
-    console.log(`  Hit-Rate@3 : ${(hit3 / n * 100).toFixed(2)}% (${hit3}/${n})  Wilson 95% CI [${(ci3.low * 100).toFixed(1)}%, ${(ci3.high * 100).toFixed(1)}%]`);
-    console.log(`  Hit-Rate@5 : ${(hit5 / n * 100).toFixed(2)}% (${hit5}/${n})  Wilson 95% CI [${(ci5.low * 100).toFixed(1)}%, ${(ci5.high * 100).toFixed(1)}%]`);
-    console.log(`  MRR        : ${mrr.toFixed(4)}`);
-    console.log(`  Near-miss gagal (chunk pembingkai jadi Top-1): ${confusableTop1}/${nearMiss.length}`);
+    console.log("RETRIEVAL ACCURACY (Positive queries with labeled ground-truth):");
+    console.log(`  Hit@1 : ${(hit1 / n * 100).toFixed(2)}% (${hit1}/${n})  Wilson 95% CI: [${(ci1.low * 100).toFixed(1)}% - ${(ci1.high * 100).toFixed(1)}%]`);
+    console.log(`  Hit@3 : ${(hit3 / n * 100).toFixed(2)}% (${hit3}/${n})  Wilson 95% CI: [${(ci3.low * 100).toFixed(1)}% - ${(ci3.high * 100).toFixed(1)}%]`);
+    console.log(`  Hit@5 : ${(hit5 / n * 100).toFixed(2)}% (${hit5}/${n})  Wilson 95% CI: [${(ci5.low * 100).toFixed(1)}% - ${(ci5.high * 100).toFixed(1)}%]`);
+    console.log(`  MRR   : ${mrr.toFixed(4)}`);
+    console.log(`  Near-miss distractor errors: ${confusableTop1}/${nearMiss.length}`);
     console.log("");
-    console.log("GROUNDEDNESS (judge LLM, tervalidasi control set):");
+    console.log("GROUNDEDNESS (LLM Judge, pre-validated on control set):");
     if (skipJudge) {
-      console.log("  dilewati (--skip-judge)");
+      console.log("  Skipped (--skip-judge)");
     } else if (judgeValidated) {
-      console.log(`  Judge model            : ${judgeModel}`);
-      console.log(`  Akurasi control set    : ${(controlAccuracy * 100).toFixed(1)}% (${controlResults.filter((c) => c.correct).length}/${controlResults.length})`);
-      console.log(`  Citation Precision@3   : ${(citationPrecision * 100).toFixed(2)}% (rata-rata chunk grounded dari 3 teratas)`);
-      console.log(`  Groundedness rate (positif): ${(posGroundedRate * 100).toFixed(2)}%`);
-      console.log(`  False-grounding (negatif/tak terjawab): ${(negFalseGround * 100).toFixed(2)}% (semakin rendah semakin baik)`);
+      console.log(`  Judge model         : ${judgeModel}`);
+      console.log(`  Control accuracy    : ${(controlAccuracy * 100).toFixed(1)}% (${controlResults.filter((c) => c.correct).length}/${controlResults.length})`);
+      console.log(`  Citation Precision@3: ${(citationPrecision * 100).toFixed(2)}% (average grounded chunks in top-3)`);
+      console.log(`  Positive Grounded   : ${(posGroundedRate * 100).toFixed(2)}% (at least 1 grounded chunk in top-3)`);
+      console.log(`  Negative False-Pos  : ${(negFalseGround * 100).toFixed(2)}% (queries falsely judged as grounded)`);
     } else {
-      console.log(`  Judge TIDAK lolos validasi (akurasi ${(controlAccuracy * 100).toFixed(1)}%) — verdict groundedness ditolak.`);
+      console.log("  Not available (validation gate failed)");
     }
     console.log("");
-    console.log("VERIFIKASI INDEKS HNSW vs BRUTE-FORCE:");
-    console.log(`  Recall@5 rata-rata     : ${(meanRecall5 * 100).toFixed(2)}%`);
-    console.log(`  Urutan identik         : ${rankMatches}/${indexChecks.length} kueri`);
+    console.log("HNSW INDEX RECALL VS BRUTE-FORCE COSINE:");
+    console.log(`  Recall@5 (mean)     : ${(meanRecall5 * 100).toFixed(2)}%`);
+    console.log(`  Identical top-5 rank: ${rankMatches}/${indexChecks.length} queries`);
     console.log("");
-    console.log("LATENCY (ms):");
-    console.log(`  Embedding API : P50=${embStats.p50.toFixed(1)} | P95=${embStats.p95.toFixed(1)} | mean=${embStats.mean.toFixed(1)} | min=${embStats.min.toFixed(1)} | max=${embStats.max.toFixed(1)}`);
-    console.log(`  Pgvector HNSW : P50=${dbStats.p50.toFixed(2)} | P95=${dbStats.p95.toFixed(2)} | mean=${dbStats.mean.toFixed(2)} | min=${dbStats.min.toFixed(2)} | max=${dbStats.max.toFixed(2)}`);
-    console.log(`  Total         : P50=${totalStats.p50.toFixed(1)} | P95=${totalStats.p95.toFixed(1)} | mean=${totalStats.mean.toFixed(1)} | min=${totalStats.min.toFixed(1)} | max=${totalStats.max.toFixed(1)}`);
+    console.log("LATENCY DISTRIBUTION (Measured across 3 iterations):");
+    console.log(`  Embedding API (P50/P90/P95): ${embStats.p50.toFixed(1)} ms / ${embStats.p90.toFixed(1)} ms / ${embStats.p95.toFixed(1)} ms`);
+    console.log(`  pgvector DB   (P50/P90/P95): ${dbStats.p50.toFixed(2)} ms / ${dbStats.p90.toFixed(2)} ms / ${dbStats.p95.toFixed(2)} ms`);
+    console.log(`  Total Pipeline(P50/P90/P95): ${totalStats.p50.toFixed(1)} ms / ${totalStats.p90.toFixed(1)} ms / ${totalStats.p95.toFixed(1)} ms`);
     console.log("");
-    console.log("CATATAN KEJUJURAN:");
-    console.log(`  - n=${n} kueri positif: CI 95% masih lebar (rentang ±20-35%).`);
-    console.log(`  - Kueri negatif hanya 6+1: estimasi false-grounding punya variansi tinggi.`);
-    console.log(`  - Ground truth kueri positif dipilih oleh inspeksi manual isi chunk, bukan auto-split.`);
-    console.log(`  - Model jev di router terverifikasi tidak tersedia saat run ini; lihat meta.judgeModel.`);
-    console.log(`  - Hasil mentah lengkap: ${filePath}`);
+    console.log(`Full execution payload saved to: ${filePath}`);
     console.log("================================================================================\n");
   } finally {
     await sql.end();

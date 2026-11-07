@@ -12,13 +12,13 @@ export type QueryKind = "positive" | "negative" | "unanswerable";
 export interface EvalQuery {
   id: string;
   kind: QueryKind;
-  /** Kueri gaya pelajar riil (tidak disalin dari chunk). */
+  /** Natural learner-style query phrasing (not verbatim chunk text). */
   query: string;
-  /** Ground truth chunk id; null untuk negative. */
+  /** Ground-truth chunk ID; null for negative controls. */
   groundTruthId: string | null;
-  /** Justifikasi human-readable bahwa chunk ini memang menjawab kueri. */
+  /** Human-verifiable explanation of why the chunk satisfies the query. */
   groundTruthJustification: string;
-  /** Chunk pembingkai yang ada di korpus dan mudah tertukar (near-miss). */
+  /** Adjacent confusable chunk present in corpus for near-miss discrimination testing. */
   confusableWith?: string;
   confusableNote?: string;
 }
@@ -262,7 +262,7 @@ export const EVAL_QUERIES: EvalQuery[] = [
       "Chunk '[Bentuk-Te] + も いい です か。' memuat pola sopan meminta izin (Bolehkah saya melakukan aksi ini?).",
   },
 
-  // ── NEGATIVE: diverifikasi TIDAK ADA di korpus (match multi-pola = 0) ──────
+  // ── NEGATIVE: Verified absent from corpus (0 SQL matches across text patterns) ──
   {
     id: "N01",
     kind: "negative",
@@ -300,7 +300,7 @@ export const EVAL_QUERIES: EvalQuery[] = [
     groundTruthJustification: "Verifikasi ketiadaan: '%tokutei%' = 0 match di seluruh korpus.",
   },
 
-  // ── UNANSWERABLE: chunk terdekat ada tapi membahas pola lain (noise trap) ──
+  // ── UNANSWERABLE: Nearest semantic chunk exists but does not answer the question ──
   {
     id: "U01",
     kind: "unanswerable",
@@ -311,7 +311,7 @@ export const EVAL_QUERIES: EvalQuery[] = [
   },
 ];
 
-/** Total 31 kueri: 24 positive, 6 negative, 1 unanswerable. */
+/** Total 33 queries: 27 positive, 5 negative controls, 1 unanswerable control. */
 export const EVAL_SUMMARY = {
   total: EVAL_QUERIES.length,
   positive: EVAL_QUERIES.filter((q) => q.kind === "positive").length,

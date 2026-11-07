@@ -26,3 +26,26 @@ Evaluation scripts, test dataset, and execution logs measuring retrieval accurac
 | HNSW Index Recall@5 | 96.4% | Graph traversal vs brute-force exact cosine comparison |
 | pgvector Latency (Local DB) | P50: 8.2 ms, P95: 16.0 ms | Measured exclusively on database query execution |
 | Total Pipeline Latency | P50: 263.2 ms, P95: 439.0 ms | Includes Cloudflare BGE-M3 remote embedding call |
+
+## Quickstart
+
+```bash
+# 1. Install dependencies
+pnpm install
+
+# 2. Verify types
+pnpm run typecheck
+
+# 3. Configure environment
+cp .env.example .env
+
+# 4. Run benchmark
+pnpm run eval:skip-judge   # Retrieval latency & index recall benchmarks
+pnpm run eval              # Full evaluation including LLM judge groundedness
+```
+
+## Production Roadmap
+
+1. **Hybrid Retrieval (Dense + Sparse)**: Combine pgvector HNSW cosine distance with PostgreSQL full-text search (BM25 / `tsvector`) using Reciprocal Rank Fusion (RRF) for exact keyword coverage.
+2. **Cross-Encoder Reranking**: Evaluate a lightweight reranking model (e.g. BGE-Reranker) on Top-20 candidates before slicing to Top-5 context chunks.
+3. **Continuous CI Regression**: Run evaluation suites automatically on pull requests to prevent retrieval regressions when chunking strategies or embeddings change.

@@ -1,0 +1,20 @@
+{
+  "name": "fatsees-search-eval",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Evaluation harness and benchmark scripts for vector retrieval and groundedness validation",
+  "scripts": {
+    "eval": "tsx scripts/rag-eval-run.ts",
+    "eval:skip-judge": "tsx scripts/rag-eval-run.ts --skip-judge",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "postgres": "^3.4.4"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.4",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  }
+}
