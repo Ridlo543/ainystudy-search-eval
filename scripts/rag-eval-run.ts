@@ -15,11 +15,12 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { EVAL_QUERIES, type EvalQuery } from "./rag-eval-dataset";
 
 const DB_URL = process.env.DATABASE_URL || "";
-const EMBEDDING_API_KEY = process.env.EMBEDDING_API_KEY || process.env.GEMINI_API_KEY || "";
-const EMBEDDING_API_URL = process.env.EMBEDDING_API_URL || (EMBEDDING_API_KEY ? `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${EMBEDDING_API_KEY}` : "");
-const JUDGE_API_KEY = process.env.JUDGE_API_KEY || process.env.LLM_API_KEY || "";
+const EMBEDDING_API_KEY = process.env.EMBEDDING_API_KEY || "";
+const EMBEDDING_API_URL = process.env.EMBEDDING_API_URL || "";
+const EMBEDDING_MODEL = process.env.EMBEDDING_MODEL || "@cf/baai/bge-m3";
+const JUDGE_API_KEY = process.env.JUDGE_API_KEY || "";
 const JUDGE_API_URL = process.env.JUDGE_API_URL || "";
-const DIMS = 768;
+const DIMS = 1024;
 const ITERATIONS = 3;
 const TOP_K = 5;
 const JUDGE_CONCURRENCY = 6;
@@ -107,17 +108,23 @@ function wilsonCI(successes: number, n: number, z = 1.96): { low: number; high: 
 // ── embedding ───────────────────────────────────────────────────────────────
 async function embedQuery(text: string): Promise<number[]> {
   if (!EMBEDDING_API_URL) {
-    throw new Error("EMBEDDING_API_URL or EMBEDDING_API_KEY environment variable is not configured");
+    throw new Error("EMBEDDING_API_URL environment variable is not configured");
   }
   for (let attempt = 1; attempt <= 4; attempt++) {
     const res = await fetch(EMBEDDING_API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: { parts: [{ text }] }, outputDimensionality: DIMS }),
+      headers: {
+        ...(EMBEDDING_API_KEY ? { Authorization: `Bearer ${EMBEDDING_API_KEY}` } : {}),
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: EMBEDDING_MODEL,
+        input: text,
+      }),
     });
     if (res.ok) {
       const data = await res.json();
-      const values = data.embedding?.values;
+      const values = data.data?.[0]?.embedding || data.embedding?.values;
       if (!Array.isArray(values) || values.length !== DIMS) {
         throw new Error(`Invalid embedding vector dimension: received ${values?.length}, expected ${DIMS}`);
       }
@@ -285,11 +292,9 @@ async function runWithConcurrency<T, R>(items: T[], limit: number, fn: (item: T)
   await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
   return results;
 }
-
-// ── main ────────────────────────────────────────────────────────────────────
 async function main() {
   if (!DB_URL) throw new Error("DATABASE_URL environment variable is required.");
-  if (!EMBEDDING_API_URL && !EMBEDDING_API_KEY) throw new Error("EMBEDDING_API_URL or EMBEDDING_API_KEY is required.");
+  if (!EMBEDDING_API_URL) throw new Error("EMBEDDING_API_URL environment variable is required.");
   const args = process.argv.slice(2);
   const judgeArgIdx = args.indexOf("--judge");
   const preferredJudge = judgeArgIdx >= 0 ? args[judgeArgIdx + 1] : null;
@@ -305,8 +310,7 @@ async function main() {
     console.log(`Corpus records    : ${corpusCount.count} chunks (lesson_materials + reading_articles + toeic_questions)`);
     console.log(`Evaluation queries: ${EVAL_QUERIES.length} (27 positive, 5 negative, 1 unanswerable)`);
     console.log(`Latency iterations: ${ITERATIONS}x per query = ${EVAL_QUERIES.length * ITERATIONS} samples`);
-    console.log(`Embedding model   : Cloudflare BGE-M3 (${DIMS} dim)`);
-    console.log("");
+    console.log(`Embedding model   : ${EMBEDDING_MODEL} (${DIMS} dim)`);
 
     // ── 1. Judge Validation via Control Set ────────────────────────────────
     const defaultJudge = process.env.JUDGE_MODEL || "gpt-4o-mini";
@@ -574,10 +578,9 @@ async function main() {
         queries: EVAL_QUERIES.length,
         positives: positives.length,
         negatives: negatives.filter((q) => q.kind === "negative").length,
-        unanswerable: negatives.filter((q) => q.kind === "unanswerable").length,
+        embeddingModel: `${EMBEDDING_MODEL} (${DIMS}d)`,
         nearMiss: nearMiss.length,
         iterations: ITERATIONS,
-        embeddingModel: "Cloudflare BGE-M3 (768d)",
         judgeModel,
         judgeValidated,
         controlAccuracy,

@@ -31,7 +31,7 @@ Chunks are indexed from production educational modules:
 | `toeic_questions` | Practice questions, passages, and explanations | 1,806 |
 | **Total** | | **2,487** |
 
-- Embedding model: Cloudflare BGE-M3 (`@cf/baai/bge-m3`, 768-dimensional output).
+- Embedding model: Cloudflare BGE-M3 (`@cf/baai/bge-m3`, 1024-dimensional output).
 - Index: PostgreSQL `pgvector` HNSW (`vector_cosine_ops`, `m = 16`, `ef_construction = 64`).
 
 ---

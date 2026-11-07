@@ -38,7 +38,7 @@
       <rect x="0" y="0" width="260" height="80" rx="6" ry="6" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4 3" style="fill: light-dark(#f8fafc, #1e293b); stroke: light-dark(#94a3b8, #64748b);"/>
       <text x="130" y="24" fill="#0f172a" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="12px" font-weight="600" text-anchor="middle" style="fill: light-dark(#0f172a, #f8fafc);">Cloudflare Workers AI</text>
       <text x="130" y="40" fill="#64748b" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10px" text-anchor="middle" style="fill: light-dark(#64748b, #94a3b8);">[External REST API]</text>
-      <text x="130" y="60" fill="#475569" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11px" text-anchor="middle" style="fill: light-dark(#475569, #cbd5e1);">Infers BGE-M3 (768d) query vector embeddings.</text>
+      <text x="130" y="60" fill="#475569" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="11px" text-anchor="middle" style="fill: light-dark(#475569, #cbd5e1);">Infers BGE-M3 (1024d) query vector embeddings.</text>
     </g>
 
     <!-- Edge 2: Runner -> Cloudflare -->
