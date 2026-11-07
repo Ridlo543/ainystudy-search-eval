@@ -1,0 +1,4045 @@
+{
+  "meta": {
+    "timestamp": "2026-11-06T10:02:48.431Z",
+    "pipeline": "production-curriculum-chunks (BGE-M3 1024d + pgvector HNSW + Drizzle)",
+    "corpusSize": 2487,
+    "queries": 33,
+    "positives": 27,
+    "negatives": 5,
+    "unanswerable": 1,
+    "nearMiss": 6,
+    "iterations": 3,
+    "latencySampleCount": 99,
+    "embeddingModel": "cloudflare-ainything/@cf/baai/bge-m3",
+    "routerUrl": "http://localhost:20129/v1",
+    "judgeModel": "laya",
+    "judgeValidated": true,
+    "controlAccuracy": 0.9166666666666666,
+    "controlResults": [
+      {
+        "queryId": "control",
+        "chunkId": "Suki & partikel GA",
+        "grounded": true,
+        "precision": 0.7585,
+        "reason": "systemone noul=0.758",
+        "latencyMs": 737,
+        "controlItem": true,
+        "expectedGrounded": true,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Garbage rules",
+        "grounded": true,
+        "precision": 0.5959,
+        "reason": "systemone noul=0.596",
+        "latencyMs": 1849,
+        "controlItem": true,
+        "expectedGrounded": true,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Comparative",
+        "grounded": true,
+        "precision": 0.4944,
+        "reason": "systemone noul=0.494",
+        "latencyMs": 1241,
+        "controlItem": true,
+        "expectedGrounded": true,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Causative offer",
+        "grounded": true,
+        "precision": 0.39,
+        "reason": "systemone noul=0.390",
+        "latencyMs": 2497,
+        "controlItem": true,
+        "expectedGrounded": true,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Quiet carriage",
+        "grounded": true,
+        "precision": 0.7939,
+        "reason": "systemone noul=0.794",
+        "latencyMs": 2414,
+        "controlItem": true,
+        "expectedGrounded": true,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Kanji yasumu",
+        "grounded": true,
+        "precision": 0.8132,
+        "reason": "systemone noul=0.813",
+        "latencyMs": 2536,
+        "controlItem": true,
+        "expectedGrounded": true,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "TOEIC passive voice",
+        "grounded": false,
+        "precision": 0.1241,
+        "reason": "systemone noul=0.124",
+        "latencyMs": 2481,
+        "controlItem": true,
+        "expectedGrounded": false,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Kanji yasumu",
+        "grounded": false,
+        "precision": 0.1154,
+        "reason": "systemone noul=0.115",
+        "latencyMs": 2397,
+        "controlItem": true,
+        "expectedGrounded": false,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "TOEIC comparative",
+        "grounded": false,
+        "precision": 0.1172,
+        "reason": "systemone noul=0.117",
+        "latencyMs": 2267,
+        "controlItem": true,
+        "expectedGrounded": false,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Ryokan reservation",
+        "grounded": true,
+        "precision": 0.712,
+        "reason": "systemone noul=0.712",
+        "latencyMs": 2220,
+        "controlItem": true,
+        "expectedGrounded": false,
+        "correct": false
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Kare rumahan",
+        "grounded": false,
+        "precision": 0.2932,
+        "reason": "systemone noul=0.293",
+        "latencyMs": 2281,
+        "controlItem": true,
+        "expectedGrounded": false,
+        "correct": true
+      },
+      {
+        "queryId": "control",
+        "chunkId": "Partikel lokasi",
+        "grounded": false,
+        "precision": 0.1235,
+        "reason": "systemone noul=0.123",
+        "latencyMs": 2267,
+        "controlItem": true,
+        "expectedGrounded": false,
+        "correct": true
+      }
+    ],
+    "similarityThreshold": 0.35,
+    "topKJudge": 3
+  },
+  "metrics": {
+    "hitAt1": {
+      "value": 0.8148148148148148,
+      "successes": 22,
+      "n": 27,
+      "wilson95": {
+        "low": 0.6330094349480825,
+        "high": 0.9181941342571468
+      }
+    },
+    "hitAt3": {
+      "value": 0.8518518518518519,
+      "successes": 23,
+      "n": 27,
+      "wilson95": {
+        "low": 0.6752093665317053,
+        "high": 0.9408416814035511
+      }
+    },
+    "hitAt5": {
+      "value": 0.9629629629629629,
+      "successes": 26,
+      "n": 27,
+      "wilson95": {
+        "low": 0.8171614606584349,
+        "high": 0.9934320234669024
+      }
+    },
+    "mrr": 0.8530864197530863,
+    "ndcgAt5": 0.8795631823474566,
+    "confusableTop1Rate": 0,
+    "groundedness": {
+      "value": 0.8484848484848484,
+      "validQueries": 28,
+      "totalQueries": 33,
+      "formula": "(total kueri dengan grounding valid / total test set) * 100",
+      "rejected": false
+    },
+    "citationPrecisionAt3": 0.7530864197530867,
+    "negativeFalseGroundingRate": 0.8333333333333334,
+    "positiveGroundedRate": 1,
+    "indexRecall5": 0.9636363636363637,
+    "indexRankMatchRate": 0.8484848484848485
+  },
+  "latency": {
+    "embeddingMs": {
+      "count": 99,
+      "min": 150.22589999999764,
+      "p50": 250.9248000000007,
+      "p90": 416.90344000000044,
+      "p95": 431.58827000000264,
+      "p99": 500.1882539999989,
+      "mean": 276.6467080808081,
+      "max": 699.5375999999997
+    },
+    "databaseMs": {
+      "count": 99,
+      "min": 5.47110000000248,
+      "p50": 8.226000000000568,
+      "p90": 12.471859999997834,
+      "p95": 16.044229999999683,
+      "p99": 32.471647999999334,
+      "mean": 10.203090909091054,
+      "max": 102.91639999999825
+    },
+    "totalMs": {
+      "count": 99,
+      "min": 158.15329999999813,
+      "p50": 263.1851000000024,
+      "p90": 424.8895800000013,
+      "p95": 438.961430000003,
+      "p99": 508.8429559999985,
+      "mean": 286.84979898989906,
+      "max": 705.9775999999983
+    },
+    "sampleCount": 99
+  },
+  "queries": [
+    {
+      "id": "P01",
+      "kind": "positive",
+      "query": "kenapa pas bilang suka ramen harus pakai ga ya, bukan wo?",
+      "groundTruthId": "232f664d-bb71-4413-8456-0fde6f4ba029",
+      "top1Id": "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+      "top1Similarity": 0.5254896196780381,
+      "top3Ids": [
+        "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+        "ec34d80f-e7a5-4ed7-b82d-4077ae309cc7",
+        "232f664d-bb71-4413-8456-0fde6f4ba029"
+      ],
+      "top5Ids": [
+        "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+        "ec34d80f-e7a5-4ed7-b82d-4077ae309cc7",
+        "232f664d-bb71-4413-8456-0fde6f4ba029",
+        "6eda133d-110c-42a4-9c3a-e419d374ba5e",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ],
+      "hitAt1": false,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 0.3333333333333333,
+      "ndcg5": 0.5,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P01",
+          "chunkId": "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+          "grounded": false,
+          "precision": 0.0446,
+          "reason": "systemone noul=0.045",
+          "latencyMs": 899
+        },
+        {
+          "queryId": "P01",
+          "chunkId": "ec34d80f-e7a5-4ed7-b82d-4077ae309cc7",
+          "grounded": true,
+          "precision": 0.7194,
+          "reason": "systemone noul=0.719",
+          "latencyMs": 2280
+        },
+        {
+          "queryId": "P01",
+          "chunkId": "232f664d-bb71-4413-8456-0fde6f4ba029",
+          "grounded": true,
+          "precision": 0.6755,
+          "reason": "systemone noul=0.675",
+          "latencyMs": 4116
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P02",
+      "kind": "positive",
+      "query": "gimana cara minta tolong orang nunggu sebentar dengan sopan?",
+      "groundTruthId": "e3bd244e-5289-425a-a7ad-79499ad3f931",
+      "top1Id": "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+      "top1Similarity": 0.6570034680980352,
+      "top3Ids": [
+        "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7"
+      ],
+      "top5Ids": [
+        "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7",
+        "a2a44fa8-37b5-41ec-afa8-c2dc6a33da4a",
+        "e3bd244e-5289-425a-a7ad-79499ad3f931"
+      ],
+      "hitAt1": false,
+      "hitAt3": false,
+      "hitAt5": true,
+      "reciprocalRank": 0.2,
+      "ndcg5": 0.38685280723454163,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P02",
+          "chunkId": "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+          "grounded": true,
+          "precision": 0.8694,
+          "reason": "systemone noul=0.869",
+          "latencyMs": 7432
+        },
+        {
+          "queryId": "P02",
+          "chunkId": "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+          "grounded": false,
+          "precision": 0.1498,
+          "reason": "systemone noul=0.150",
+          "latencyMs": 3353
+        },
+        {
+          "queryId": "P02",
+          "chunkId": "3cd4ca18-17d5-4288-94b9-82f9def29fc7",
+          "grounded": true,
+          "precision": 0.5807,
+          "reason": "systemone noul=0.581",
+          "latencyMs": 6295
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P03",
+      "kind": "positive",
+      "query": "kalau mau bilang jangan lupa ke teman gimana ya?",
+      "groundTruthId": "5805912a-135c-4f95-ae46-09b252810df3",
+      "confusableWith": "e3bd244e-5289-425a-a7ad-79499ad3f931",
+      "top1Id": "t01-l-p2-18",
+      "top1Similarity": 0.5693390948344486,
+      "top3Ids": [
+        "t01-l-p2-18",
+        "reading-07",
+        "reading-n5-14-park-letter"
+      ],
+      "top5Ids": [
+        "t01-l-p2-18",
+        "reading-07",
+        "reading-n5-14-park-letter",
+        "5805912a-135c-4f95-ae46-09b252810df3",
+        "28842bf9-de3b-44d0-9cf6-a7229992ea47"
+      ],
+      "hitAt1": false,
+      "hitAt3": false,
+      "hitAt5": true,
+      "reciprocalRank": 0.25,
+      "ndcg5": 0.43067655807339306,
+      "confusableIsTop1": false,
+      "judgeVerdicts": [
+        {
+          "queryId": "P03",
+          "chunkId": "t01-l-p2-18",
+          "grounded": true,
+          "precision": 0.4818,
+          "reason": "systemone noul=0.482",
+          "latencyMs": 7626
+        },
+        {
+          "queryId": "P03",
+          "chunkId": "reading-07",
+          "grounded": true,
+          "precision": 0.5563,
+          "reason": "systemone noul=0.556",
+          "latencyMs": 8370
+        },
+        {
+          "queryId": "P03",
+          "chunkId": "reading-n5-14-park-letter",
+          "grounded": true,
+          "precision": 0.6776,
+          "reason": "systemone noul=0.678",
+          "latencyMs": 8841
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P04",
+      "kind": "positive",
+      "query": "kenapa keterlambatan gara gara hujan deras kereta mogok dijelasin pakai pola apa?",
+      "groundTruthId": "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+      "top1Id": "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+      "top1Similarity": 0.6046807464714783,
+      "top3Ids": [
+        "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "t03-l-p3-41"
+      ],
+      "top5Ids": [
+        "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "t03-l-p3-41",
+        "t06-r-p5-124",
+        "t01-l-p4-92"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P04",
+          "chunkId": "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+          "grounded": true,
+          "precision": 0.7511,
+          "reason": "systemone noul=0.751",
+          "latencyMs": 10569
+        },
+        {
+          "queryId": "P04",
+          "chunkId": "785615f3-0a97-49de-8b53-044a61b9c4c3",
+          "grounded": true,
+          "precision": 0.404,
+          "reason": "systemone noul=0.404",
+          "latencyMs": 9409
+        },
+        {
+          "queryId": "P04",
+          "chunkId": "t03-l-p3-41",
+          "grounded": true,
+          "precision": 0.6075,
+          "reason": "systemone noul=0.608",
+          "latencyMs": 9316
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P05",
+      "kind": "positive",
+      "query": "teman ngajarin aku bahasa jepang, kenapa pakai oshiete kuremashita?",
+      "groundTruthId": "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+      "confusableWith": "9258b8d2-a076-4a19-bea2-565eca4cba10",
+      "top1Id": "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+      "top1Similarity": 0.6404510455959926,
+      "top3Ids": [
+        "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+        "728ce0d4-f69f-4af2-b3ff-e9d75284cb49",
+        "b364da2e-b864-4540-8438-1c84fc1c9f05"
+      ],
+      "top5Ids": [
+        "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+        "728ce0d4-f69f-4af2-b3ff-e9d75284cb49",
+        "b364da2e-b864-4540-8438-1c84fc1c9f05",
+        "5fc90f70-47f2-4648-b48b-7794ce235ecb",
+        "fb4e8473-e2fd-4bfb-8c80-1a1428d0d762"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": false,
+      "judgeVerdicts": [
+        {
+          "queryId": "P05",
+          "chunkId": "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+          "grounded": true,
+          "precision": 0.7182,
+          "reason": "systemone noul=0.718",
+          "latencyMs": 9430
+        },
+        {
+          "queryId": "P05",
+          "chunkId": "728ce0d4-f69f-4af2-b3ff-e9d75284cb49",
+          "grounded": false,
+          "precision": 0.142,
+          "reason": "systemone noul=0.142",
+          "latencyMs": 8504
+        },
+        {
+          "queryId": "P05",
+          "chunkId": "b364da2e-b864-4540-8438-1c84fc1c9f05",
+          "grounded": true,
+          "precision": 0.3698,
+          "reason": "systemone noul=0.370",
+          "latencyMs": 7925
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P06",
+      "kind": "positive",
+      "query": "ibu buatin kue ultah, pakai tsukutte kuremashita ya?",
+      "groundTruthId": "9258b8d2-a076-4a19-bea2-565eca4cba10",
+      "top1Id": "9258b8d2-a076-4a19-bea2-565eca4cba10",
+      "top1Similarity": 0.5951748153974202,
+      "top3Ids": [
+        "9258b8d2-a076-4a19-bea2-565eca4cba10",
+        "a748ec13-c1db-40dd-8495-9840e28c902f",
+        "reading-05"
+      ],
+      "top5Ids": [
+        "9258b8d2-a076-4a19-bea2-565eca4cba10",
+        "a748ec13-c1db-40dd-8495-9840e28c902f",
+        "reading-05",
+        "reading-09",
+        "ff7dd3e5-b9f6-496f-ab15-1168d73c049b"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P06",
+          "chunkId": "9258b8d2-a076-4a19-bea2-565eca4cba10",
+          "grounded": true,
+          "precision": 0.8618,
+          "reason": "systemone noul=0.862",
+          "latencyMs": 7389
+        },
+        {
+          "queryId": "P06",
+          "chunkId": "a748ec13-c1db-40dd-8495-9840e28c902f",
+          "grounded": true,
+          "precision": 0.5477,
+          "reason": "systemone noul=0.548",
+          "latencyMs": 7633
+        },
+        {
+          "queryId": "P06",
+          "chunkId": "reading-05",
+          "grounded": true,
+          "precision": 0.9694,
+          "reason": "systemone noul=0.969",
+          "latencyMs": 9144
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P07",
+      "kind": "positive",
+      "query": "cara nawarin diri buat ngerjain pekerjaan ke atasan?",
+      "groundTruthId": "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+      "top1Id": "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+      "top1Similarity": 0.6459007470653193,
+      "top3Ids": [
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-137",
+        "t03-r-p6-138"
+      ],
+      "top5Ids": [
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-137",
+        "t03-r-p6-138",
+        "t03-r-p6-136",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P07",
+          "chunkId": "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+          "grounded": false,
+          "precision": 0.2523,
+          "reason": "systemone noul=0.252",
+          "latencyMs": 9114
+        },
+        {
+          "queryId": "P07",
+          "chunkId": "t03-r-p6-137",
+          "grounded": true,
+          "precision": 0.5097,
+          "reason": "systemone noul=0.510",
+          "latencyMs": 9413
+        },
+        {
+          "queryId": "P07",
+          "chunkId": "t03-r-p6-138",
+          "grounded": true,
+          "precision": 0.5999,
+          "reason": "systemone noul=0.600",
+          "latencyMs": 10028
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P08",
+      "kind": "positive",
+      "query": "kanji istirahat yasumu itu bentuknya orang sama pohon ya? ceritanya gimana",
+      "groundTruthId": "ebdc9fa4-42f6-4296-9746-a7035b639008",
+      "top1Id": "ebdc9fa4-42f6-4296-9746-a7035b639008",
+      "top1Similarity": 0.6154055909880838,
+      "top3Ids": [
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "8e2f22f8-4a24-403f-abe9-c186805bc540"
+      ],
+      "top5Ids": [
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "8e2f22f8-4a24-403f-abe9-c186805bc540",
+        "5bd61a99-013d-4c6a-84d1-e9c6fea198d0",
+        "dce88794-e349-41f0-85bb-ffae570b4a8e"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P08",
+          "chunkId": "ebdc9fa4-42f6-4296-9746-a7035b639008",
+          "grounded": true,
+          "precision": 0.7656,
+          "reason": "systemone noul=0.766",
+          "latencyMs": 8971
+        },
+        {
+          "queryId": "P08",
+          "chunkId": "785615f3-0a97-49de-8b53-044a61b9c4c3",
+          "grounded": true,
+          "precision": 0.7453,
+          "reason": "systemone noul=0.745",
+          "latencyMs": 8819
+        },
+        {
+          "queryId": "P08",
+          "chunkId": "8e2f22f8-4a24-403f-abe9-c186805bc540",
+          "grounded": false,
+          "precision": 0.1051,
+          "reason": "systemone noul=0.105",
+          "latencyMs": 7646
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P09",
+      "kind": "positive",
+      "query": "mau cerita kegiatan minggu kayak baca buku denger musik gitu caranya?",
+      "groundTruthId": "161a0f56-359f-4ce9-b3ee-248c4b59da44",
+      "top1Id": "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+      "top1Similarity": 0.6208709614631436,
+      "top3Ids": [
+        "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+        "t04-l-p3-44",
+        "19325176-5795-48e0-afe8-81222f0780e7"
+      ],
+      "top5Ids": [
+        "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+        "t04-l-p3-44",
+        "19325176-5795-48e0-afe8-81222f0780e7",
+        "t02-l-p3-60",
+        "15516adf-a180-47f9-b042-3e379483fcbd"
+      ],
+      "hitAt1": false,
+      "hitAt3": false,
+      "hitAt5": false,
+      "reciprocalRank": 0,
+      "ndcg5": 0,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P09",
+          "chunkId": "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+          "grounded": true,
+          "precision": 0.6624,
+          "reason": "systemone noul=0.662",
+          "latencyMs": 7641
+        },
+        {
+          "queryId": "P09",
+          "chunkId": "t04-l-p3-44",
+          "grounded": true,
+          "precision": 0.4843,
+          "reason": "systemone noul=0.484",
+          "latencyMs": 6984
+        },
+        {
+          "queryId": "P09",
+          "chunkId": "19325176-5795-48e0-afe8-81222f0780e7",
+          "grounded": false,
+          "precision": 0.117,
+          "reason": "systemone noul=0.117",
+          "latencyMs": 6943
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P10",
+      "kind": "positive",
+      "query": "kalo bilang nggak usah maksak diri gimana?",
+      "groundTruthId": "2f49d1e0-0337-4e76-8405-e1e60a492072",
+      "top1Id": "2f49d1e0-0337-4e76-8405-e1e60a492072",
+      "top1Similarity": 0.6357724710052591,
+      "top3Ids": [
+        "2f49d1e0-0337-4e76-8405-e1e60a492072",
+        "f65e058e-898e-4d18-8e04-64ea186dadff",
+        "51d9b8e1-9576-4fc0-a966-2c59e67f3bbd"
+      ],
+      "top5Ids": [
+        "2f49d1e0-0337-4e76-8405-e1e60a492072",
+        "f65e058e-898e-4d18-8e04-64ea186dadff",
+        "51d9b8e1-9576-4fc0-a966-2c59e67f3bbd",
+        "45e972ac-ce65-47a4-9a95-b8e6ffd3c232",
+        "4c23eb3d-0d6a-4a6d-ae57-806e0c0ef342"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P10",
+          "chunkId": "2f49d1e0-0337-4e76-8405-e1e60a492072",
+          "grounded": true,
+          "precision": 0.7424,
+          "reason": "systemone noul=0.742",
+          "latencyMs": 6749
+        },
+        {
+          "queryId": "P10",
+          "chunkId": "f65e058e-898e-4d18-8e04-64ea186dadff",
+          "grounded": false,
+          "precision": 0.3,
+          "reason": "systemone noul=0.300",
+          "latencyMs": 6763
+        },
+        {
+          "queryId": "P10",
+          "chunkId": "51d9b8e1-9576-4fc0-a966-2c59e67f3bbd",
+          "grounded": true,
+          "precision": 0.3899,
+          "reason": "systemone noul=0.390",
+          "latencyMs": 6694
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P11",
+      "kind": "positive",
+      "query": "aturan buang sampah di apartemen sakura gimana?",
+      "groundTruthId": "reading-n4-01-garbage-rules",
+      "confusableWith": "reading-n4-07-water-tank-cleaning",
+      "top1Id": "reading-n4-01-garbage-rules",
+      "top1Similarity": 0.7183375029550383,
+      "top3Ids": [
+        "reading-n4-01-garbage-rules",
+        "1e81c013-290d-4fc6-85d9-a629ad75040d",
+        "reading-05"
+      ],
+      "top5Ids": [
+        "reading-n4-01-garbage-rules",
+        "1e81c013-290d-4fc6-85d9-a629ad75040d",
+        "reading-05",
+        "t05-r-p6-134",
+        "t05-r-p6-131"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": false,
+      "judgeVerdicts": [
+        {
+          "queryId": "P11",
+          "chunkId": "reading-n4-01-garbage-rules",
+          "grounded": true,
+          "precision": 0.8607,
+          "reason": "systemone noul=0.861",
+          "latencyMs": 8706
+        },
+        {
+          "queryId": "P11",
+          "chunkId": "1e81c013-290d-4fc6-85d9-a629ad75040d",
+          "grounded": true,
+          "precision": 0.5731,
+          "reason": "systemone noul=0.573",
+          "latencyMs": 8581
+        },
+        {
+          "queryId": "P11",
+          "chunkId": "reading-05",
+          "grounded": true,
+          "precision": 0.906,
+          "reason": "systemone noul=0.906",
+          "latencyMs": 9505
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P12",
+      "kind": "positive",
+      "query": "mau buat akun bank sakura harus reservasi dulu?",
+      "groundTruthId": "reading-n4-06-bank-account-opening",
+      "confusableWith": "reading-n4-03-ryokan-reservation",
+      "top1Id": "reading-n4-06-bank-account-opening",
+      "top1Similarity": 0.6023484585132616,
+      "top3Ids": [
+        "reading-n4-06-bank-account-opening",
+        "t03-r-p6-140",
+        "reading-07"
+      ],
+      "top5Ids": [
+        "reading-n4-06-bank-account-opening",
+        "t03-r-p6-140",
+        "reading-07",
+        "t03-r-p6-141",
+        "t02-r-p7-186"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": false,
+      "judgeVerdicts": [
+        {
+          "queryId": "P12",
+          "chunkId": "reading-n4-06-bank-account-opening",
+          "grounded": true,
+          "precision": 0.79,
+          "reason": "systemone noul=0.790",
+          "latencyMs": 11923
+        },
+        {
+          "queryId": "P12",
+          "chunkId": "t03-r-p6-140",
+          "grounded": true,
+          "precision": 0.3518,
+          "reason": "systemone noul=0.352",
+          "latencyMs": 12502
+        },
+        {
+          "queryId": "P12",
+          "chunkId": "reading-07",
+          "grounded": true,
+          "precision": 0.4264,
+          "reason": "systemone noul=0.426",
+          "latencyMs": 13472
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P13",
+      "kind": "positive",
+      "query": "gerbong kereta yang biasanya dipakai buat yang mau tenang namanya apa?",
+      "groundTruthId": "reading-n2-04-quiet-carriage",
+      "top1Id": "reading-n2-04-quiet-carriage",
+      "top1Similarity": 0.648375430436195,
+      "top3Ids": [
+        "reading-n2-04-quiet-carriage",
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "d21b7b87-cfea-4cad-bf77-1e5626ea595d"
+      ],
+      "top5Ids": [
+        "reading-n2-04-quiet-carriage",
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "d21b7b87-cfea-4cad-bf77-1e5626ea595d",
+        "508a08f5-43ec-4b05-b4cf-5f9110f7dace",
+        "t04-r-p7-151"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P13",
+          "chunkId": "reading-n2-04-quiet-carriage",
+          "grounded": true,
+          "precision": 0.9154,
+          "reason": "systemone noul=0.915",
+          "latencyMs": 13612
+        },
+        {
+          "queryId": "P13",
+          "chunkId": "ebdc9fa4-42f6-4296-9746-a7035b639008",
+          "grounded": true,
+          "precision": 0.6286,
+          "reason": "systemone noul=0.629",
+          "latencyMs": 13701
+        },
+        {
+          "queryId": "P13",
+          "chunkId": "d21b7b87-cfea-4cad-bf77-1e5626ea595d",
+          "grounded": true,
+          "precision": 0.7108,
+          "reason": "systemone noul=0.711",
+          "latencyMs": 12022
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P14",
+      "kind": "positive",
+      "query": "ada tempat ngobrol dulu sebelum buang barang rusak, itu apa?",
+      "groundTruthId": "reading-n3-01-repair-cafe",
+      "top1Id": "reading-n3-01-repair-cafe",
+      "top1Similarity": 0.6267403755138548,
+      "top3Ids": [
+        "reading-n3-01-repair-cafe",
+        "reading-n4-01-garbage-rules",
+        "t05-l-p4-72"
+      ],
+      "top5Ids": [
+        "reading-n3-01-repair-cafe",
+        "reading-n4-01-garbage-rules",
+        "t05-l-p4-72",
+        "t08-l-p3-34",
+        "t07-l-p3-59"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P14",
+          "chunkId": "reading-n3-01-repair-cafe",
+          "grounded": true,
+          "precision": 0.8155,
+          "reason": "systemone noul=0.816",
+          "latencyMs": 11987
+        },
+        {
+          "queryId": "P14",
+          "chunkId": "reading-n4-01-garbage-rules",
+          "grounded": true,
+          "precision": 0.8471,
+          "reason": "systemone noul=0.847",
+          "latencyMs": 13388
+        },
+        {
+          "queryId": "P14",
+          "chunkId": "t05-l-p4-72",
+          "grounded": true,
+          "precision": 0.4653,
+          "reason": "systemone noul=0.465",
+          "latencyMs": 12040
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P15",
+      "kind": "positive",
+      "query": "cara bikin kare rumahan yang gampang?",
+      "groundTruthId": "reading-03",
+      "confusableWith": "reading-09",
+      "top1Id": "reading-03",
+      "top1Similarity": 0.719930156011837,
+      "top3Ids": [
+        "reading-03",
+        "reading-09",
+        "702dc643-d273-4b7c-80de-551204356923"
+      ],
+      "top5Ids": [
+        "reading-03",
+        "reading-09",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "reading-n5-12-breakfast"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": false,
+      "judgeVerdicts": [
+        {
+          "queryId": "P15",
+          "chunkId": "reading-03",
+          "grounded": true,
+          "precision": 0.9232,
+          "reason": "systemone noul=0.923",
+          "latencyMs": 11733
+        },
+        {
+          "queryId": "P15",
+          "chunkId": "reading-09",
+          "grounded": false,
+          "precision": 0.1205,
+          "reason": "systemone noul=0.120",
+          "latencyMs": 13925
+        },
+        {
+          "queryId": "P15",
+          "chunkId": "702dc643-d273-4b7c-80de-551204356923",
+          "grounded": false,
+          "precision": 0.1601,
+          "reason": "systemone noul=0.160",
+          "latencyMs": 14285
+        }
+      ],
+      "groundedChunkCount": 1,
+      "groundingValid": true
+    },
+    {
+      "id": "P16",
+      "kind": "positive",
+      "query": "kenapa bangku umum di taman jarang dipakai?",
+      "groundTruthId": "reading-n1-02-public-bench",
+      "top1Id": "reading-n1-02-public-bench",
+      "top1Similarity": 0.5854084016497547,
+      "top3Ids": [
+        "reading-n1-02-public-bench",
+        "t04-r-p7-162",
+        "t06-r-p6-138"
+      ],
+      "top5Ids": [
+        "reading-n1-02-public-bench",
+        "t04-r-p7-162",
+        "t06-r-p6-138",
+        "reading-n2-04-quiet-carriage",
+        "t06-r-p6-136"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P16",
+          "chunkId": "reading-n1-02-public-bench",
+          "grounded": true,
+          "precision": 0.9553,
+          "reason": "systemone noul=0.955",
+          "latencyMs": 14337
+        },
+        {
+          "queryId": "P16",
+          "chunkId": "t04-r-p7-162",
+          "grounded": false,
+          "precision": 0.2971,
+          "reason": "systemone noul=0.297",
+          "latencyMs": 12934
+        },
+        {
+          "queryId": "P16",
+          "chunkId": "t06-r-p6-138",
+          "grounded": true,
+          "precision": 0.8139,
+          "reason": "systemone noul=0.814",
+          "latencyMs": 13597
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P17",
+      "kind": "positive",
+      "query": "cara bikin onigiri tuna mayo?",
+      "groundTruthId": "reading-09",
+      "top1Id": "reading-09",
+      "top1Similarity": 0.7358979743294628,
+      "top3Ids": [
+        "reading-09",
+        "reading-n5-14-park-letter",
+        "702dc643-d273-4b7c-80de-551204356923"
+      ],
+      "top5Ids": [
+        "reading-09",
+        "reading-n5-14-park-letter",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "reading-03",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P17",
+          "chunkId": "reading-09",
+          "grounded": true,
+          "precision": 0.6316,
+          "reason": "systemone noul=0.632",
+          "latencyMs": 13862
+        },
+        {
+          "queryId": "P17",
+          "chunkId": "reading-n5-14-park-letter",
+          "grounded": false,
+          "precision": 0.121,
+          "reason": "systemone noul=0.121",
+          "latencyMs": 12349
+        },
+        {
+          "queryId": "P17",
+          "chunkId": "702dc643-d273-4b7c-80de-551204356923",
+          "grounded": false,
+          "precision": 0.2219,
+          "reason": "systemone noul=0.222",
+          "latencyMs": 12349
+        }
+      ],
+      "groundedChunkCount": 1,
+      "groundingValid": true
+    },
+    {
+      "id": "P18",
+      "kind": "positive",
+      "query": "ketentuan balikin buku perpustakaan apa aja?",
+      "groundTruthId": "reading-10",
+      "top1Id": "reading-10",
+      "top1Similarity": 0.6059527470195875,
+      "top3Ids": [
+        "reading-10",
+        "reading-n2-03-seed-library",
+        "b4df424a-e1a2-4430-8410-e3761057d0c1"
+      ],
+      "top5Ids": [
+        "reading-10",
+        "reading-n2-03-seed-library",
+        "b4df424a-e1a2-4430-8410-e3761057d0c1",
+        "t05-r-p7-149",
+        "a9d04ea7-f413-49fe-a33a-037bb6aec5c9"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P18",
+          "chunkId": "reading-10",
+          "grounded": true,
+          "precision": 0.9998,
+          "reason": "systemone noul=1.000",
+          "latencyMs": 12138
+        },
+        {
+          "queryId": "P18",
+          "chunkId": "reading-n2-03-seed-library",
+          "grounded": false,
+          "precision": 0.2604,
+          "reason": "systemone noul=0.260",
+          "latencyMs": 13603
+        },
+        {
+          "queryId": "P18",
+          "chunkId": "b4df424a-e1a2-4430-8410-e3761057d0c1",
+          "grounded": false,
+          "precision": 0.1064,
+          "reason": "systemone noul=0.106",
+          "latencyMs": 13308
+        }
+      ],
+      "groundedChunkCount": 1,
+      "groundingValid": true
+    },
+    {
+      "id": "P19",
+      "kind": "positive",
+      "query": "lobby renovated looks much ___ than before, jawabannya apa?",
+      "groundTruthId": "t07-r-p5-119",
+      "confusableWith": "t05-r-p5-130",
+      "top1Id": "t07-r-p5-119",
+      "top1Similarity": 0.6718056217662105,
+      "top3Ids": [
+        "t07-r-p5-119",
+        "t02-r-p7-174",
+        "t02-r-p7-173"
+      ],
+      "top5Ids": [
+        "t07-r-p5-119",
+        "t02-r-p7-174",
+        "t02-r-p7-173",
+        "t02-r-p7-175",
+        "t02-r-p7-172"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": false,
+      "judgeVerdicts": [
+        {
+          "queryId": "P19",
+          "chunkId": "t07-r-p5-119",
+          "grounded": true,
+          "precision": 0.8338,
+          "reason": "systemone noul=0.834",
+          "latencyMs": 11203
+        },
+        {
+          "queryId": "P19",
+          "chunkId": "t02-r-p7-174",
+          "grounded": true,
+          "precision": 0.5894,
+          "reason": "systemone noul=0.589",
+          "latencyMs": 11071
+        },
+        {
+          "queryId": "P19",
+          "chunkId": "t02-r-p7-173",
+          "grounded": true,
+          "precision": 0.6665,
+          "reason": "systemone noul=0.666",
+          "latencyMs": 11287
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P20",
+      "kind": "positive",
+      "query": "the shipment was delayed because the customs documents were ___",
+      "groundTruthId": "t07-r-p5-129",
+      "top1Id": "t07-r-p5-129",
+      "top1Similarity": 0.6827899115347678,
+      "top3Ids": [
+        "t07-r-p5-129",
+        "t04-r-p5-119",
+        "t02-r-p5-110"
+      ],
+      "top5Ids": [
+        "t07-r-p5-129",
+        "t04-r-p5-119",
+        "t02-r-p5-110",
+        "t04-l-p3-38",
+        "t02-r-p7-147"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P20",
+          "chunkId": "t07-r-p5-129",
+          "grounded": true,
+          "precision": 0.4604,
+          "reason": "systemone noul=0.460",
+          "latencyMs": 9206
+        },
+        {
+          "queryId": "P20",
+          "chunkId": "t04-r-p5-119",
+          "grounded": false,
+          "precision": 0.2727,
+          "reason": "systemone noul=0.273",
+          "latencyMs": 7076
+        },
+        {
+          "queryId": "P20",
+          "chunkId": "t02-r-p5-110",
+          "grounded": false,
+          "precision": 0.3324,
+          "reason": "systemone noul=0.332",
+          "latencyMs": 6774
+        }
+      ],
+      "groundedChunkCount": 1,
+      "groundingValid": true
+    },
+    {
+      "id": "P21",
+      "kind": "positive",
+      "query": "sales figures this quarter are ___ to those of previous, pilih apa?",
+      "groundTruthId": "t05-r-p5-130",
+      "top1Id": "t05-r-p5-130",
+      "top1Similarity": 0.611614875856944,
+      "top3Ids": [
+        "t05-r-p5-130",
+        "t04-r-p5-102",
+        "t03-l-p3-64"
+      ],
+      "top5Ids": [
+        "t05-r-p5-130",
+        "t04-r-p5-102",
+        "t03-l-p3-64",
+        "t03-l-p3-63",
+        "t09-l-p4-95"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P21",
+          "chunkId": "t05-r-p5-130",
+          "grounded": true,
+          "precision": 0.6442,
+          "reason": "systemone noul=0.644",
+          "latencyMs": 6661
+        },
+        {
+          "queryId": "P21",
+          "chunkId": "t04-r-p5-102",
+          "grounded": false,
+          "precision": 0.1336,
+          "reason": "systemone noul=0.134",
+          "latencyMs": 6347
+        },
+        {
+          "queryId": "P21",
+          "chunkId": "t03-l-p3-64",
+          "grounded": false,
+          "precision": 0.1832,
+          "reason": "systemone noul=0.183",
+          "latencyMs": 5939
+        }
+      ],
+      "groundedChunkCount": 1,
+      "groundingValid": true
+    },
+    {
+      "id": "P22",
+      "kind": "positive",
+      "query": "the board has asked the finance department to prepare an ___",
+      "groundTruthId": "t04-r-p5-128",
+      "top1Id": "t04-r-p5-128",
+      "top1Similarity": 0.6031944784537983,
+      "top3Ids": [
+        "t04-r-p5-128",
+        "t03-r-p7-168",
+        "t07-r-p7-165"
+      ],
+      "top5Ids": [
+        "t04-r-p5-128",
+        "t03-r-p7-168",
+        "t07-r-p7-165",
+        "t03-r-p7-170",
+        "t03-r-p5-124"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P22",
+          "chunkId": "t04-r-p5-128",
+          "grounded": true,
+          "precision": 0.6291,
+          "reason": "systemone noul=0.629",
+          "latencyMs": 5989
+        },
+        {
+          "queryId": "P22",
+          "chunkId": "t03-r-p7-168",
+          "grounded": true,
+          "precision": 0.6949,
+          "reason": "systemone noul=0.695",
+          "latencyMs": 6349
+        },
+        {
+          "queryId": "P22",
+          "chunkId": "t07-r-p7-165",
+          "grounded": true,
+          "precision": 0.4808,
+          "reason": "systemone noul=0.481",
+          "latencyMs": 6988
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P23",
+      "kind": "positive",
+      "query": "kapan reportnya di submit?",
+      "groundTruthId": "t03-l-p3-38",
+      "top1Id": "t01-r-p7-167",
+      "top1Similarity": 0.6589545526108604,
+      "top3Ids": [
+        "t01-r-p7-167",
+        "t01-r-p7-164",
+        "t06-r-p7-169"
+      ],
+      "top5Ids": [
+        "t01-r-p7-167",
+        "t01-r-p7-164",
+        "t06-r-p7-169",
+        "t03-l-p3-38",
+        "t06-l-p2-12"
+      ],
+      "hitAt1": false,
+      "hitAt3": false,
+      "hitAt5": true,
+      "reciprocalRank": 0.25,
+      "ndcg5": 0.43067655807339306,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P23",
+          "chunkId": "t01-r-p7-167",
+          "grounded": true,
+          "precision": 0.58,
+          "reason": "systemone noul=0.580",
+          "latencyMs": 7761
+        },
+        {
+          "queryId": "P23",
+          "chunkId": "t01-r-p7-164",
+          "grounded": true,
+          "precision": 0.6186,
+          "reason": "systemone noul=0.619",
+          "latencyMs": 8323
+        },
+        {
+          "queryId": "P23",
+          "chunkId": "t06-r-p7-169",
+          "grounded": true,
+          "precision": 0.6009,
+          "reason": "systemone noul=0.601",
+          "latencyMs": 8671
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P24",
+      "kind": "positive",
+      "query": "kapan hillcrest kirim produk pertama ke japan?",
+      "groundTruthId": "t06-r-p7-175",
+      "top1Id": "t06-r-p7-175",
+      "top1Similarity": 0.6787351899126746,
+      "top3Ids": [
+        "t06-r-p7-175",
+        "t06-r-p7-172",
+        "t06-r-p7-173"
+      ],
+      "top5Ids": [
+        "t06-r-p7-175",
+        "t06-r-p7-172",
+        "t06-r-p7-173",
+        "t06-r-p7-174",
+        "t01-r-p6-143"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P24",
+          "chunkId": "t06-r-p7-175",
+          "grounded": true,
+          "precision": 0.8456,
+          "reason": "systemone noul=0.846",
+          "latencyMs": 9226
+        },
+        {
+          "queryId": "P24",
+          "chunkId": "t06-r-p7-172",
+          "grounded": true,
+          "precision": 0.8241,
+          "reason": "systemone noul=0.824",
+          "latencyMs": 9395
+        },
+        {
+          "queryId": "P24",
+          "chunkId": "t06-r-p7-173",
+          "grounded": true,
+          "precision": 0.8278,
+          "reason": "systemone noul=0.828",
+          "latencyMs": 9280
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P25",
+      "kind": "positive",
+      "query": "partikel no buat nunjuk punya siapa gimana?",
+      "groundTruthId": "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+      "top1Id": "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+      "top1Similarity": 0.6300611628966963,
+      "top3Ids": [
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-r-p7-159"
+      ],
+      "top5Ids": [
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-r-p7-159",
+        "b0d26d9f-a1f6-4008-ba3d-5be5d5dec17c",
+        "844c07c5-1c13-42ba-ad0a-6dccf4ea4c4c"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P25",
+          "chunkId": "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+          "grounded": true,
+          "precision": 0.6735,
+          "reason": "systemone noul=0.673",
+          "latencyMs": 8317
+        },
+        {
+          "queryId": "P25",
+          "chunkId": "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+          "grounded": true,
+          "precision": 0.664,
+          "reason": "systemone noul=0.664",
+          "latencyMs": 7406
+        },
+        {
+          "queryId": "P25",
+          "chunkId": "t01-r-p7-159",
+          "grounded": true,
+          "precision": 0.5823,
+          "reason": "systemone noul=0.582",
+          "latencyMs": 7491
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": true
+    },
+    {
+      "id": "P26",
+      "kind": "positive",
+      "query": "jam 7 shichiji atau nanaji yang bener?",
+      "groundTruthId": "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+      "top1Id": "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+      "top1Similarity": 0.59705812773824,
+      "top3Ids": [
+        "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+        "6faaaa8c-c7e0-4ae4-9570-629ce10f7e16",
+        "f80bcce9-98fd-47f2-b56f-4e6f4022702a"
+      ],
+      "top5Ids": [
+        "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+        "6faaaa8c-c7e0-4ae4-9570-629ce10f7e16",
+        "f80bcce9-98fd-47f2-b56f-4e6f4022702a",
+        "48c9b6be-1fbd-4152-abe7-fb5fe6e750bd",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P26",
+          "chunkId": "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+          "grounded": true,
+          "precision": 0.6782,
+          "reason": "systemone noul=0.678",
+          "latencyMs": 6563
+        },
+        {
+          "queryId": "P26",
+          "chunkId": "6faaaa8c-c7e0-4ae4-9570-629ce10f7e16",
+          "grounded": true,
+          "precision": 0.7728,
+          "reason": "systemone noul=0.773",
+          "latencyMs": 5751
+        },
+        {
+          "queryId": "P26",
+          "chunkId": "f80bcce9-98fd-47f2-b56f-4e6f4022702a",
+          "grounded": false,
+          "precision": 0.2511,
+          "reason": "systemone noul=0.251",
+          "latencyMs": 5008
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "P27",
+      "kind": "positive",
+      "query": "cara minta izin boleh foto pakai te mo ii desu ka?",
+      "groundTruthId": "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+      "top1Id": "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+      "top1Similarity": 0.5827788895487318,
+      "top3Ids": [
+        "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+        "3bcbb552-8d67-4384-8ab8-ec523cce04a6",
+        "d7aee1ee-a37f-42fa-b71f-54a39213c32d"
+      ],
+      "top5Ids": [
+        "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+        "3bcbb552-8d67-4384-8ab8-ec523cce04a6",
+        "d7aee1ee-a37f-42fa-b71f-54a39213c32d",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9"
+      ],
+      "hitAt1": true,
+      "hitAt3": true,
+      "hitAt5": true,
+      "reciprocalRank": 1,
+      "ndcg5": 1,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "P27",
+          "chunkId": "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+          "grounded": true,
+          "precision": 0.5733,
+          "reason": "systemone noul=0.573",
+          "latencyMs": 4977
+        },
+        {
+          "queryId": "P27",
+          "chunkId": "3bcbb552-8d67-4384-8ab8-ec523cce04a6",
+          "grounded": false,
+          "precision": 0.1559,
+          "reason": "systemone noul=0.156",
+          "latencyMs": 5282
+        },
+        {
+          "queryId": "P27",
+          "chunkId": "d7aee1ee-a37f-42fa-b71f-54a39213c32d",
+          "grounded": true,
+          "precision": 0.8145,
+          "reason": "systemone noul=0.815",
+          "latencyMs": 4920
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": true
+    },
+    {
+      "id": "N01",
+      "kind": "negative",
+      "query": "cara bilang pernah ke jepang pakai pola ta koto ga arimasu?",
+      "groundTruthId": null,
+      "top1Id": "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+      "top1Similarity": 0.5695285143265141,
+      "top3Ids": [
+        "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+        "75b4ab6e-2821-4bd4-b985-c66414127be3",
+        "2835da7e-e3cb-434a-b0dd-f941b4cfcefe"
+      ],
+      "top5Ids": [
+        "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+        "75b4ab6e-2821-4bd4-b985-c66414127be3",
+        "2835da7e-e3cb-434a-b0dd-f941b4cfcefe",
+        "eaa78b54-488d-4bf5-b2ed-f63d6d3aa3ef",
+        "547a5f3a-5a01-4046-a44c-ec18bdb0d469"
+      ],
+      "hitAt1": null,
+      "hitAt3": null,
+      "hitAt5": null,
+      "reciprocalRank": null,
+      "ndcg5": null,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "N01",
+          "chunkId": "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+          "grounded": true,
+          "precision": 0.5653,
+          "reason": "systemone noul=0.565",
+          "latencyMs": 5481
+        },
+        {
+          "queryId": "N01",
+          "chunkId": "75b4ab6e-2821-4bd4-b985-c66414127be3",
+          "grounded": false,
+          "precision": 0.201,
+          "reason": "systemone noul=0.201",
+          "latencyMs": 5710
+        },
+        {
+          "queryId": "N01",
+          "chunkId": "2835da7e-e3cb-434a-b0dd-f941b4cfcefe",
+          "grounded": false,
+          "precision": 0.0345,
+          "reason": "systemone noul=0.035",
+          "latencyMs": 6122
+        }
+      ],
+      "groundedChunkCount": 1,
+      "groundingValid": false
+    },
+    {
+      "id": "N02",
+      "kind": "negative",
+      "query": "resep nasi goreng pakai bahasa jepang?",
+      "groundTruthId": null,
+      "top1Id": "reading-09",
+      "top1Similarity": 0.5621195256194733,
+      "top3Ids": [
+        "reading-09",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a"
+      ],
+      "top5Ids": [
+        "reading-09",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "e5be3bc5-3ce6-4056-bd8a-21a4f0532169"
+      ],
+      "hitAt1": null,
+      "hitAt3": null,
+      "hitAt5": null,
+      "reciprocalRank": null,
+      "ndcg5": null,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "N02",
+          "chunkId": "reading-09",
+          "grounded": false,
+          "precision": 0.1592,
+          "reason": "systemone noul=0.159",
+          "latencyMs": 8350
+        },
+        {
+          "queryId": "N02",
+          "chunkId": "111c3a97-8bfd-4862-b2b6-501582b64e90",
+          "grounded": false,
+          "precision": 0.1822,
+          "reason": "systemone noul=0.182",
+          "latencyMs": 10174
+        },
+        {
+          "queryId": "N02",
+          "chunkId": "2b8197af-01b5-434f-b48c-44c01280bf3a",
+          "grounded": false,
+          "precision": 0.1315,
+          "reason": "systemone noul=0.132",
+          "latencyMs": 10043
+        }
+      ],
+      "groundedChunkCount": 0,
+      "groundingValid": true
+    },
+    {
+      "id": "N03",
+      "kind": "negative",
+      "query": "tiket disneyland tokyo berapa harganya?",
+      "groundTruthId": null,
+      "top1Id": "reading-08",
+      "top1Similarity": 0.558162674223853,
+      "top3Ids": [
+        "reading-08",
+        "t08-r-p7-192",
+        "t08-r-p7-191"
+      ],
+      "top5Ids": [
+        "reading-08",
+        "t08-r-p7-192",
+        "t08-r-p7-191",
+        "t08-r-p7-195",
+        "t08-r-p7-194"
+      ],
+      "hitAt1": null,
+      "hitAt3": null,
+      "hitAt5": null,
+      "reciprocalRank": null,
+      "ndcg5": null,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "N03",
+          "chunkId": "reading-08",
+          "grounded": true,
+          "precision": 0.9663,
+          "reason": "systemone noul=0.966",
+          "latencyMs": 11786
+        },
+        {
+          "queryId": "N03",
+          "chunkId": "t08-r-p7-192",
+          "grounded": false,
+          "precision": 0.3382,
+          "reason": "systemone noul=0.338",
+          "latencyMs": 12512
+        },
+        {
+          "queryId": "N03",
+          "chunkId": "t08-r-p7-191",
+          "grounded": true,
+          "precision": 0.3776,
+          "reason": "systemone noul=0.378",
+          "latencyMs": 12878
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": false
+    },
+    {
+      "id": "N04",
+      "kind": "negative",
+      "query": "jam 4 yoji dibaca gimana pengecualiannya?",
+      "groundTruthId": null,
+      "top1Id": "t04-l-p2-27",
+      "top1Similarity": 0.5424099908918689,
+      "top3Ids": [
+        "t04-l-p2-27",
+        "t04-l-p2-25",
+        "t04-l-p4-75"
+      ],
+      "top5Ids": [
+        "t04-l-p2-27",
+        "t04-l-p2-25",
+        "t04-l-p4-75",
+        "t04-l-p2-14",
+        "t07-l-p4-87"
+      ],
+      "hitAt1": null,
+      "hitAt3": null,
+      "hitAt5": null,
+      "reciprocalRank": null,
+      "ndcg5": null,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "N04",
+          "chunkId": "t04-l-p2-27",
+          "grounded": true,
+          "precision": 0.8267,
+          "reason": "systemone noul=0.827",
+          "latencyMs": 10835
+        },
+        {
+          "queryId": "N04",
+          "chunkId": "t04-l-p2-25",
+          "grounded": true,
+          "precision": 0.6387,
+          "reason": "systemone noul=0.639",
+          "latencyMs": 8883
+        },
+        {
+          "queryId": "N04",
+          "chunkId": "t04-l-p4-75",
+          "grounded": false,
+          "precision": 0.3347,
+          "reason": "systemone noul=0.335",
+          "latencyMs": 8751
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": false
+    },
+    {
+      "id": "N05",
+      "kind": "negative",
+      "query": "syarat dokumen visa kerja tokutei ginou apa saja?",
+      "groundTruthId": null,
+      "top1Id": "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+      "top1Similarity": 0.43282171691347826,
+      "top3Ids": [
+        "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+        "5960f42b-15da-4b4a-b48c-0a4578d97b90",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9"
+      ],
+      "top5Ids": [
+        "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+        "5960f42b-15da-4b4a-b48c-0a4578d97b90",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-139",
+        "f8e2f839-f294-4d58-bc2e-013a31e45513"
+      ],
+      "hitAt1": null,
+      "hitAt3": null,
+      "hitAt5": null,
+      "reciprocalRank": null,
+      "ndcg5": null,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "N05",
+          "chunkId": "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+          "grounded": true,
+          "precision": 0.8266,
+          "reason": "systemone noul=0.827",
+          "latencyMs": 8203
+        },
+        {
+          "queryId": "N05",
+          "chunkId": "5960f42b-15da-4b4a-b48c-0a4578d97b90",
+          "grounded": true,
+          "precision": 0.6973,
+          "reason": "systemone noul=0.697",
+          "latencyMs": 9203
+        },
+        {
+          "queryId": "N05",
+          "chunkId": "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+          "grounded": false,
+          "precision": 0.1119,
+          "reason": "systemone noul=0.112",
+          "latencyMs": 8660
+        }
+      ],
+      "groundedChunkCount": 2,
+      "groundingValid": false
+    },
+    {
+      "id": "U01",
+      "kind": "unanswerable",
+      "query": "apa perbedaan mendalam partikel wo dan ni pada objek penderita kalimat kausatif aktif?",
+      "groundTruthId": null,
+      "top1Id": "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+      "top1Similarity": 0.5378593220158422,
+      "top3Ids": [
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-l-p1-04",
+        "t04-l-p1-01"
+      ],
+      "top5Ids": [
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-l-p1-04",
+        "t04-l-p1-01",
+        "d6efb8b9-31e7-47ad-9c34-8952e1a32d81",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ],
+      "hitAt1": null,
+      "hitAt3": null,
+      "hitAt5": null,
+      "reciprocalRank": null,
+      "ndcg5": null,
+      "confusableIsTop1": null,
+      "judgeVerdicts": [
+        {
+          "queryId": "U01",
+          "chunkId": "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+          "grounded": true,
+          "precision": 0.8266,
+          "reason": "systemone noul=0.827",
+          "latencyMs": 8684
+        },
+        {
+          "queryId": "U01",
+          "chunkId": "t01-l-p1-04",
+          "grounded": true,
+          "precision": 0.6914,
+          "reason": "systemone noul=0.691",
+          "latencyMs": 8799
+        },
+        {
+          "queryId": "U01",
+          "chunkId": "t04-l-p1-01",
+          "grounded": true,
+          "precision": 0.6714,
+          "reason": "systemone noul=0.671",
+          "latencyMs": 9064
+        }
+      ],
+      "groundedChunkCount": 3,
+      "groundingValid": false
+    }
+  ],
+  "indexChecks": [
+    {
+      "queryId": "P01",
+      "hnswTop5": [
+        "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+        "ec34d80f-e7a5-4ed7-b82d-4077ae309cc7",
+        "232f664d-bb71-4413-8456-0fde6f4ba029",
+        "6eda133d-110c-42a4-9c3a-e419d374ba5e",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ],
+      "exactTop5": [
+        "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+        "ec34d80f-e7a5-4ed7-b82d-4077ae309cc7",
+        "232f664d-bb71-4413-8456-0fde6f4ba029",
+        "6eda133d-110c-42a4-9c3a-e419d374ba5e",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P02",
+      "hnswTop5": [
+        "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7",
+        "a2a44fa8-37b5-41ec-afa8-c2dc6a33da4a",
+        "e3bd244e-5289-425a-a7ad-79499ad3f931"
+      ],
+      "exactTop5": [
+        "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7",
+        "a2a44fa8-37b5-41ec-afa8-c2dc6a33da4a",
+        "e3bd244e-5289-425a-a7ad-79499ad3f931"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P03",
+      "hnswTop5": [
+        "t01-l-p2-18",
+        "reading-07",
+        "reading-n5-14-park-letter",
+        "5805912a-135c-4f95-ae46-09b252810df3",
+        "28842bf9-de3b-44d0-9cf6-a7229992ea47"
+      ],
+      "exactTop5": [
+        "t01-l-p2-18",
+        "reading-07",
+        "reading-n5-14-park-letter",
+        "5805912a-135c-4f95-ae46-09b252810df3",
+        "28842bf9-de3b-44d0-9cf6-a7229992ea47"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P04",
+      "hnswTop5": [
+        "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "t03-l-p3-41",
+        "t06-r-p5-124",
+        "t01-l-p4-92"
+      ],
+      "exactTop5": [
+        "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "t03-l-p3-41",
+        "t06-r-p5-124",
+        "t01-l-p4-92"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P05",
+      "hnswTop5": [
+        "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+        "728ce0d4-f69f-4af2-b3ff-e9d75284cb49",
+        "b364da2e-b864-4540-8438-1c84fc1c9f05",
+        "5fc90f70-47f2-4648-b48b-7794ce235ecb",
+        "fb4e8473-e2fd-4bfb-8c80-1a1428d0d762"
+      ],
+      "exactTop5": [
+        "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+        "728ce0d4-f69f-4af2-b3ff-e9d75284cb49",
+        "b364da2e-b864-4540-8438-1c84fc1c9f05",
+        "5fc90f70-47f2-4648-b48b-7794ce235ecb",
+        "fb4e8473-e2fd-4bfb-8c80-1a1428d0d762"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P06",
+      "hnswTop5": [
+        "9258b8d2-a076-4a19-bea2-565eca4cba10",
+        "a748ec13-c1db-40dd-8495-9840e28c902f",
+        "reading-05",
+        "reading-09",
+        "ff7dd3e5-b9f6-496f-ab15-1168d73c049b"
+      ],
+      "exactTop5": [
+        "9258b8d2-a076-4a19-bea2-565eca4cba10",
+        "a748ec13-c1db-40dd-8495-9840e28c902f",
+        "reading-05",
+        "reading-09",
+        "ff7dd3e5-b9f6-496f-ab15-1168d73c049b"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P07",
+      "hnswTop5": [
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-137",
+        "t03-r-p6-138",
+        "t03-r-p6-136",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7"
+      ],
+      "exactTop5": [
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-137",
+        "t03-r-p6-138",
+        "t03-r-p6-136",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P08",
+      "hnswTop5": [
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "8e2f22f8-4a24-403f-abe9-c186805bc540",
+        "5bd61a99-013d-4c6a-84d1-e9c6fea198d0",
+        "dce88794-e349-41f0-85bb-ffae570b4a8e"
+      ],
+      "exactTop5": [
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "8e2f22f8-4a24-403f-abe9-c186805bc540",
+        "5bd61a99-013d-4c6a-84d1-e9c6fea198d0",
+        "dce88794-e349-41f0-85bb-ffae570b4a8e"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P09",
+      "hnswTop5": [
+        "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+        "t04-l-p3-44",
+        "19325176-5795-48e0-afe8-81222f0780e7",
+        "t02-l-p3-60",
+        "15516adf-a180-47f9-b042-3e379483fcbd"
+      ],
+      "exactTop5": [
+        "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+        "t04-l-p3-44",
+        "19325176-5795-48e0-afe8-81222f0780e7",
+        "t02-l-p3-60",
+        "15516adf-a180-47f9-b042-3e379483fcbd"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P10",
+      "hnswTop5": [
+        "2f49d1e0-0337-4e76-8405-e1e60a492072",
+        "f65e058e-898e-4d18-8e04-64ea186dadff",
+        "51d9b8e1-9576-4fc0-a966-2c59e67f3bbd",
+        "45e972ac-ce65-47a4-9a95-b8e6ffd3c232",
+        "4c23eb3d-0d6a-4a6d-ae57-806e0c0ef342"
+      ],
+      "exactTop5": [
+        "2f49d1e0-0337-4e76-8405-e1e60a492072",
+        "f65e058e-898e-4d18-8e04-64ea186dadff",
+        "51d9b8e1-9576-4fc0-a966-2c59e67f3bbd",
+        "45e972ac-ce65-47a4-9a95-b8e6ffd3c232",
+        "t02-r-p5-108"
+      ],
+      "recall5": 0.8,
+      "rankMatch": false
+    },
+    {
+      "queryId": "P11",
+      "hnswTop5": [
+        "reading-n4-01-garbage-rules",
+        "1e81c013-290d-4fc6-85d9-a629ad75040d",
+        "reading-05",
+        "t05-r-p6-134",
+        "t05-r-p6-131"
+      ],
+      "exactTop5": [
+        "reading-n4-01-garbage-rules",
+        "1e81c013-290d-4fc6-85d9-a629ad75040d",
+        "reading-05",
+        "t05-r-p6-134",
+        "t05-r-p6-131"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P12",
+      "hnswTop5": [
+        "reading-n4-06-bank-account-opening",
+        "t03-r-p6-140",
+        "reading-07",
+        "t03-r-p6-141",
+        "t02-r-p7-186"
+      ],
+      "exactTop5": [
+        "reading-n4-06-bank-account-opening",
+        "t03-r-p6-140",
+        "reading-07",
+        "t03-r-p6-141",
+        "t02-r-p7-186"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P13",
+      "hnswTop5": [
+        "reading-n2-04-quiet-carriage",
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "d21b7b87-cfea-4cad-bf77-1e5626ea595d",
+        "508a08f5-43ec-4b05-b4cf-5f9110f7dace",
+        "t04-r-p7-151"
+      ],
+      "exactTop5": [
+        "reading-n2-04-quiet-carriage",
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "d21b7b87-cfea-4cad-bf77-1e5626ea595d",
+        "t01-l-p3-63",
+        "508a08f5-43ec-4b05-b4cf-5f9110f7dace"
+      ],
+      "recall5": 0.8,
+      "rankMatch": false
+    },
+    {
+      "queryId": "P14",
+      "hnswTop5": [
+        "reading-n3-01-repair-cafe",
+        "reading-n4-01-garbage-rules",
+        "t05-l-p4-72",
+        "t08-l-p3-34",
+        "t07-l-p3-59"
+      ],
+      "exactTop5": [
+        "reading-n3-01-repair-cafe",
+        "reading-n4-01-garbage-rules",
+        "t05-l-p4-72",
+        "t08-l-p3-34",
+        "t07-l-p3-59"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P15",
+      "hnswTop5": [
+        "reading-03",
+        "reading-09",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "reading-n5-12-breakfast"
+      ],
+      "exactTop5": [
+        "reading-03",
+        "reading-09",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "reading-n5-12-breakfast"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P16",
+      "hnswTop5": [
+        "reading-n1-02-public-bench",
+        "t04-r-p7-162",
+        "t06-r-p6-138",
+        "reading-n2-04-quiet-carriage",
+        "t06-r-p6-136"
+      ],
+      "exactTop5": [
+        "reading-n1-02-public-bench",
+        "t04-r-p7-162",
+        "t06-r-p6-138",
+        "reading-n2-04-quiet-carriage",
+        "t06-r-p6-136"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P17",
+      "hnswTop5": [
+        "reading-09",
+        "reading-n5-14-park-letter",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "reading-03",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a"
+      ],
+      "exactTop5": [
+        "reading-09",
+        "reading-n5-14-park-letter",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "reading-03",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P18",
+      "hnswTop5": [
+        "reading-10",
+        "reading-n2-03-seed-library",
+        "b4df424a-e1a2-4430-8410-e3761057d0c1",
+        "t05-r-p7-149",
+        "a9d04ea7-f413-49fe-a33a-037bb6aec5c9"
+      ],
+      "exactTop5": [
+        "reading-10",
+        "reading-n2-03-seed-library",
+        "b4df424a-e1a2-4430-8410-e3761057d0c1",
+        "t05-r-p7-149",
+        "a9d04ea7-f413-49fe-a33a-037bb6aec5c9"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P19",
+      "hnswTop5": [
+        "t07-r-p5-119",
+        "t02-r-p7-174",
+        "t02-r-p7-173",
+        "t02-r-p7-175",
+        "t02-r-p7-172"
+      ],
+      "exactTop5": [
+        "t07-r-p5-119",
+        "t02-r-p7-174",
+        "t02-r-p7-173",
+        "t02-r-p7-175",
+        "t02-r-p7-172"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P20",
+      "hnswTop5": [
+        "t07-r-p5-129",
+        "t04-r-p5-119",
+        "t02-r-p5-110",
+        "t04-l-p3-38",
+        "t02-r-p7-147"
+      ],
+      "exactTop5": [
+        "t07-r-p5-129",
+        "t04-r-p5-119",
+        "t02-r-p5-110",
+        "t04-l-p3-38",
+        "t02-r-p7-147"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P21",
+      "hnswTop5": [
+        "t05-r-p5-130",
+        "t04-r-p5-102",
+        "t03-l-p3-64",
+        "t03-l-p3-63",
+        "t09-l-p4-95"
+      ],
+      "exactTop5": [
+        "t05-r-p5-130",
+        "t04-r-p5-102",
+        "t03-l-p3-64",
+        "t03-l-p3-63",
+        "t09-l-p4-95"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P22",
+      "hnswTop5": [
+        "t04-r-p5-128",
+        "t03-r-p7-168",
+        "t07-r-p7-165",
+        "t03-r-p7-170",
+        "t03-r-p5-124"
+      ],
+      "exactTop5": [
+        "t04-r-p5-128",
+        "t03-r-p7-168",
+        "t07-r-p7-165",
+        "t03-r-p7-170",
+        "t03-r-p5-124"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P23",
+      "hnswTop5": [
+        "t01-r-p7-167",
+        "t01-r-p7-164",
+        "t06-r-p7-169",
+        "t03-l-p3-38",
+        "t06-l-p2-12"
+      ],
+      "exactTop5": [
+        "t01-r-p7-167",
+        "t01-r-p7-164",
+        "t06-r-p7-169",
+        "t03-l-p3-38",
+        "t06-l-p2-12"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P24",
+      "hnswTop5": [
+        "t06-r-p7-175",
+        "t06-r-p7-172",
+        "t06-r-p7-173",
+        "t06-r-p7-174",
+        "t01-r-p6-143"
+      ],
+      "exactTop5": [
+        "t06-r-p7-175",
+        "t06-r-p7-172",
+        "t06-r-p7-173",
+        "t06-r-p7-174",
+        "t01-r-p6-143"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P25",
+      "hnswTop5": [
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-r-p7-159",
+        "b0d26d9f-a1f6-4008-ba3d-5be5d5dec17c",
+        "844c07c5-1c13-42ba-ad0a-6dccf4ea4c4c"
+      ],
+      "exactTop5": [
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+        "t05-l-p2-16",
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-r-p7-159",
+        "b0d26d9f-a1f6-4008-ba3d-5be5d5dec17c"
+      ],
+      "recall5": 0.8,
+      "rankMatch": false
+    },
+    {
+      "queryId": "P26",
+      "hnswTop5": [
+        "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+        "6faaaa8c-c7e0-4ae4-9570-629ce10f7e16",
+        "f80bcce9-98fd-47f2-b56f-4e6f4022702a",
+        "48c9b6be-1fbd-4152-abe7-fb5fe6e750bd",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90"
+      ],
+      "exactTop5": [
+        "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+        "6faaaa8c-c7e0-4ae4-9570-629ce10f7e16",
+        "f80bcce9-98fd-47f2-b56f-4e6f4022702a",
+        "48c9b6be-1fbd-4152-abe7-fb5fe6e750bd",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "P27",
+      "hnswTop5": [
+        "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+        "3bcbb552-8d67-4384-8ab8-ec523cce04a6",
+        "d7aee1ee-a37f-42fa-b71f-54a39213c32d",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9"
+      ],
+      "exactTop5": [
+        "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+        "3bcbb552-8d67-4384-8ab8-ec523cce04a6",
+        "d7aee1ee-a37f-42fa-b71f-54a39213c32d",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "N01",
+      "hnswTop5": [
+        "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+        "75b4ab6e-2821-4bd4-b985-c66414127be3",
+        "2835da7e-e3cb-434a-b0dd-f941b4cfcefe",
+        "eaa78b54-488d-4bf5-b2ed-f63d6d3aa3ef",
+        "547a5f3a-5a01-4046-a44c-ec18bdb0d469"
+      ],
+      "exactTop5": [
+        "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+        "75b4ab6e-2821-4bd4-b985-c66414127be3",
+        "2835da7e-e3cb-434a-b0dd-f941b4cfcefe",
+        "eaa78b54-488d-4bf5-b2ed-f63d6d3aa3ef",
+        "547a5f3a-5a01-4046-a44c-ec18bdb0d469"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "N02",
+      "hnswTop5": [
+        "reading-09",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "e5be3bc5-3ce6-4056-bd8a-21a4f0532169"
+      ],
+      "exactTop5": [
+        "reading-09",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "e5be3bc5-3ce6-4056-bd8a-21a4f0532169"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "N03",
+      "hnswTop5": [
+        "reading-08",
+        "t08-r-p7-192",
+        "t08-r-p7-191",
+        "t08-r-p7-195",
+        "t08-r-p7-194"
+      ],
+      "exactTop5": [
+        "reading-08",
+        "t08-r-p7-192",
+        "t08-r-p7-191",
+        "t08-r-p7-195",
+        "t08-r-p7-194"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    },
+    {
+      "queryId": "N04",
+      "hnswTop5": [
+        "t04-l-p2-27",
+        "t04-l-p2-25",
+        "t04-l-p4-75",
+        "t04-l-p2-14",
+        "t07-l-p4-87"
+      ],
+      "exactTop5": [
+        "t04-l-p2-27",
+        "t04-l-p2-25",
+        "t04-l-p4-75",
+        "t04-l-p2-14",
+        "t05-r-p5-121"
+      ],
+      "recall5": 0.8,
+      "rankMatch": false
+    },
+    {
+      "queryId": "N05",
+      "hnswTop5": [
+        "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+        "5960f42b-15da-4b4a-b48c-0a4578d97b90",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-139",
+        "f8e2f839-f294-4d58-bc2e-013a31e45513"
+      ],
+      "exactTop5": [
+        "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+        "5960f42b-15da-4b4a-b48c-0a4578d97b90",
+        "t01-r-p7-196",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t01-r-p7-200"
+      ],
+      "recall5": 0.6,
+      "rankMatch": false
+    },
+    {
+      "queryId": "U01",
+      "hnswTop5": [
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-l-p1-04",
+        "t04-l-p1-01",
+        "d6efb8b9-31e7-47ad-9c34-8952e1a32d81",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ],
+      "exactTop5": [
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-l-p1-04",
+        "t04-l-p1-01",
+        "d6efb8b9-31e7-47ad-9c34-8952e1a32d81",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ],
+      "recall5": 1,
+      "rankMatch": true
+    }
+  ],
+  "samples": [
+    {
+      "queryId": "P01",
+      "iteration": 1,
+      "embeddingMs": 289.03979999999956,
+      "dbMs": 15.78269999999975,
+      "totalMs": 304.8224999999993,
+      "topIds": [
+        "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+        "ec34d80f-e7a5-4ed7-b82d-4077ae309cc7",
+        "232f664d-bb71-4413-8456-0fde6f4ba029",
+        "6eda133d-110c-42a4-9c3a-e419d374ba5e",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ]
+    },
+    {
+      "queryId": "P01",
+      "iteration": 2,
+      "embeddingMs": 274.1248000000005,
+      "dbMs": 7.650700000000143,
+      "totalMs": 281.77550000000065,
+      "topIds": [
+        "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+        "ec34d80f-e7a5-4ed7-b82d-4077ae309cc7",
+        "232f664d-bb71-4413-8456-0fde6f4ba029",
+        "6eda133d-110c-42a4-9c3a-e419d374ba5e",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ]
+    },
+    {
+      "queryId": "P01",
+      "iteration": 3,
+      "embeddingMs": 383.6388999999999,
+      "dbMs": 7.4266999999999825,
+      "totalMs": 391.0655999999999,
+      "topIds": [
+        "cc5ed2c2-3582-499f-a092-13c94ef896f5",
+        "ec34d80f-e7a5-4ed7-b82d-4077ae309cc7",
+        "232f664d-bb71-4413-8456-0fde6f4ba029",
+        "6eda133d-110c-42a4-9c3a-e419d374ba5e",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ]
+    },
+    {
+      "queryId": "P02",
+      "iteration": 1,
+      "embeddingMs": 345.7993999999999,
+      "dbMs": 14.42819999999847,
+      "totalMs": 360.22759999999835,
+      "topIds": [
+        "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7",
+        "a2a44fa8-37b5-41ec-afa8-c2dc6a33da4a",
+        "e3bd244e-5289-425a-a7ad-79499ad3f931"
+      ]
+    },
+    {
+      "queryId": "P02",
+      "iteration": 2,
+      "embeddingMs": 226.28780000000006,
+      "dbMs": 8.465799999999945,
+      "totalMs": 234.7536,
+      "topIds": [
+        "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7",
+        "a2a44fa8-37b5-41ec-afa8-c2dc6a33da4a",
+        "e3bd244e-5289-425a-a7ad-79499ad3f931"
+      ]
+    },
+    {
+      "queryId": "P02",
+      "iteration": 3,
+      "embeddingMs": 224.5652000000009,
+      "dbMs": 9.945800000001327,
+      "totalMs": 234.51100000000224,
+      "topIds": [
+        "82a17ffd-a878-4bdc-b6f2-0a8d54fd2f29",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7",
+        "a2a44fa8-37b5-41ec-afa8-c2dc6a33da4a",
+        "e3bd244e-5289-425a-a7ad-79499ad3f931"
+      ]
+    },
+    {
+      "queryId": "P03",
+      "iteration": 1,
+      "embeddingMs": 269.09140000000116,
+      "dbMs": 9.072399999999107,
+      "totalMs": 278.16380000000026,
+      "topIds": [
+        "t01-l-p2-18",
+        "reading-07",
+        "reading-n5-14-park-letter",
+        "5805912a-135c-4f95-ae46-09b252810df3",
+        "28842bf9-de3b-44d0-9cf6-a7229992ea47"
+      ]
+    },
+    {
+      "queryId": "P03",
+      "iteration": 2,
+      "embeddingMs": 456.2996000000003,
+      "dbMs": 10.459399999999732,
+      "totalMs": 466.759,
+      "topIds": [
+        "t01-l-p2-18",
+        "reading-07",
+        "reading-n5-14-park-letter",
+        "5805912a-135c-4f95-ae46-09b252810df3",
+        "28842bf9-de3b-44d0-9cf6-a7229992ea47"
+      ]
+    },
+    {
+      "queryId": "P03",
+      "iteration": 3,
+      "embeddingMs": 273.03859999999986,
+      "dbMs": 9.780099999999948,
+      "totalMs": 282.8186999999998,
+      "topIds": [
+        "t01-l-p2-18",
+        "reading-07",
+        "reading-n5-14-park-letter",
+        "5805912a-135c-4f95-ae46-09b252810df3",
+        "28842bf9-de3b-44d0-9cf6-a7229992ea47"
+      ]
+    },
+    {
+      "queryId": "P04",
+      "iteration": 1,
+      "embeddingMs": 345.1941000000006,
+      "dbMs": 15.228100000000268,
+      "totalMs": 360.4222000000009,
+      "topIds": [
+        "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "t03-l-p3-41",
+        "t06-r-p5-124",
+        "t01-l-p4-92"
+      ]
+    },
+    {
+      "queryId": "P04",
+      "iteration": 2,
+      "embeddingMs": 244.09499999999935,
+      "dbMs": 9.271700000001147,
+      "totalMs": 253.3667000000005,
+      "topIds": [
+        "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "t03-l-p3-41",
+        "t06-r-p5-124",
+        "t01-l-p4-92"
+      ]
+    },
+    {
+      "queryId": "P04",
+      "iteration": 3,
+      "embeddingMs": 283.09180000000015,
+      "dbMs": 9.128199999999197,
+      "totalMs": 292.21999999999935,
+      "topIds": [
+        "45b14e3b-19ff-42f7-8465-acffeabd21dc",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "t03-l-p3-41",
+        "t06-r-p5-124",
+        "t01-l-p4-92"
+      ]
+    },
+    {
+      "queryId": "P05",
+      "iteration": 1,
+      "embeddingMs": 328.1211000000003,
+      "dbMs": 10.136000000000422,
+      "totalMs": 338.2571000000007,
+      "topIds": [
+        "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+        "728ce0d4-f69f-4af2-b3ff-e9d75284cb49",
+        "b364da2e-b864-4540-8438-1c84fc1c9f05",
+        "5fc90f70-47f2-4648-b48b-7794ce235ecb",
+        "fb4e8473-e2fd-4bfb-8c80-1a1428d0d762"
+      ]
+    },
+    {
+      "queryId": "P05",
+      "iteration": 2,
+      "embeddingMs": 250.27200000000084,
+      "dbMs": 8.167600000000675,
+      "totalMs": 258.4396000000015,
+      "topIds": [
+        "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+        "728ce0d4-f69f-4af2-b3ff-e9d75284cb49",
+        "b364da2e-b864-4540-8438-1c84fc1c9f05",
+        "5fc90f70-47f2-4648-b48b-7794ce235ecb",
+        "fb4e8473-e2fd-4bfb-8c80-1a1428d0d762"
+      ]
+    },
+    {
+      "queryId": "P05",
+      "iteration": 3,
+      "embeddingMs": 400.27990000000136,
+      "dbMs": 9.283199999999852,
+      "totalMs": 409.5631000000012,
+      "topIds": [
+        "e5dc79bf-6df8-408e-b568-7983a0011e5b",
+        "728ce0d4-f69f-4af2-b3ff-e9d75284cb49",
+        "b364da2e-b864-4540-8438-1c84fc1c9f05",
+        "5fc90f70-47f2-4648-b48b-7794ce235ecb",
+        "fb4e8473-e2fd-4bfb-8c80-1a1428d0d762"
+      ]
+    },
+    {
+      "queryId": "P06",
+      "iteration": 1,
+      "embeddingMs": 237.98250000000007,
+      "dbMs": 9.890699999999924,
+      "totalMs": 247.8732,
+      "topIds": [
+        "9258b8d2-a076-4a19-bea2-565eca4cba10",
+        "a748ec13-c1db-40dd-8495-9840e28c902f",
+        "reading-05",
+        "reading-09",
+        "ff7dd3e5-b9f6-496f-ab15-1168d73c049b"
+      ]
+    },
+    {
+      "queryId": "P06",
+      "iteration": 2,
+      "embeddingMs": 226.78819999999905,
+      "dbMs": 8.626699999998891,
+      "totalMs": 235.41489999999794,
+      "topIds": [
+        "9258b8d2-a076-4a19-bea2-565eca4cba10",
+        "a748ec13-c1db-40dd-8495-9840e28c902f",
+        "reading-05",
+        "reading-09",
+        "ff7dd3e5-b9f6-496f-ab15-1168d73c049b"
+      ]
+    },
+    {
+      "queryId": "P06",
+      "iteration": 3,
+      "embeddingMs": 451.61119999999937,
+      "dbMs": 9.29700000000048,
+      "totalMs": 460.90819999999985,
+      "topIds": [
+        "9258b8d2-a076-4a19-bea2-565eca4cba10",
+        "a748ec13-c1db-40dd-8495-9840e28c902f",
+        "reading-05",
+        "reading-09",
+        "ff7dd3e5-b9f6-496f-ab15-1168d73c049b"
+      ]
+    },
+    {
+      "queryId": "P07",
+      "iteration": 1,
+      "embeddingMs": 224.28120000000126,
+      "dbMs": 18.39799999999923,
+      "totalMs": 242.6792000000005,
+      "topIds": [
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-137",
+        "t03-r-p6-138",
+        "t03-r-p6-136",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7"
+      ]
+    },
+    {
+      "queryId": "P07",
+      "iteration": 2,
+      "embeddingMs": 496.1198999999997,
+      "dbMs": 8.699899999999616,
+      "totalMs": 504.8197999999993,
+      "topIds": [
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-137",
+        "t03-r-p6-138",
+        "t03-r-p6-136",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7"
+      ]
+    },
+    {
+      "queryId": "P07",
+      "iteration": 3,
+      "embeddingMs": 416.40760000000046,
+      "dbMs": 8.226000000000568,
+      "totalMs": 424.633600000001,
+      "topIds": [
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-137",
+        "t03-r-p6-138",
+        "t03-r-p6-136",
+        "3cd4ca18-17d5-4288-94b9-82f9def29fc7"
+      ]
+    },
+    {
+      "queryId": "P08",
+      "iteration": 1,
+      "embeddingMs": 287.46800000000076,
+      "dbMs": 8.479100000000471,
+      "totalMs": 295.9471000000012,
+      "topIds": [
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "8e2f22f8-4a24-403f-abe9-c186805bc540",
+        "5bd61a99-013d-4c6a-84d1-e9c6fea198d0",
+        "dce88794-e349-41f0-85bb-ffae570b4a8e"
+      ]
+    },
+    {
+      "queryId": "P08",
+      "iteration": 2,
+      "embeddingMs": 278.95939999999973,
+      "dbMs": 8.974599999999555,
+      "totalMs": 287.9339999999993,
+      "topIds": [
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "8e2f22f8-4a24-403f-abe9-c186805bc540",
+        "5bd61a99-013d-4c6a-84d1-e9c6fea198d0",
+        "dce88794-e349-41f0-85bb-ffae570b4a8e"
+      ]
+    },
+    {
+      "queryId": "P08",
+      "iteration": 3,
+      "embeddingMs": 287.4401000000016,
+      "dbMs": 9.10570000000007,
+      "totalMs": 296.5458000000017,
+      "topIds": [
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "785615f3-0a97-49de-8b53-044a61b9c4c3",
+        "8e2f22f8-4a24-403f-abe9-c186805bc540",
+        "5bd61a99-013d-4c6a-84d1-e9c6fea198d0",
+        "dce88794-e349-41f0-85bb-ffae570b4a8e"
+      ]
+    },
+    {
+      "queryId": "P09",
+      "iteration": 1,
+      "embeddingMs": 234.15869999999995,
+      "dbMs": 11.855799999999363,
+      "totalMs": 246.01449999999932,
+      "topIds": [
+        "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+        "t04-l-p3-44",
+        "19325176-5795-48e0-afe8-81222f0780e7",
+        "t02-l-p3-60",
+        "15516adf-a180-47f9-b042-3e379483fcbd"
+      ]
+    },
+    {
+      "queryId": "P09",
+      "iteration": 2,
+      "embeddingMs": 244.4492999999984,
+      "dbMs": 8.012899999999718,
+      "totalMs": 252.46219999999812,
+      "topIds": [
+        "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+        "t04-l-p3-44",
+        "19325176-5795-48e0-afe8-81222f0780e7",
+        "t02-l-p3-60",
+        "15516adf-a180-47f9-b042-3e379483fcbd"
+      ]
+    },
+    {
+      "queryId": "P09",
+      "iteration": 3,
+      "embeddingMs": 365.34299999999894,
+      "dbMs": 9.276599999997416,
+      "totalMs": 374.61959999999635,
+      "topIds": [
+        "3b92cd97-58b7-4d99-ae74-d8722228e9e2",
+        "t04-l-p3-44",
+        "19325176-5795-48e0-afe8-81222f0780e7",
+        "t02-l-p3-60",
+        "15516adf-a180-47f9-b042-3e379483fcbd"
+      ]
+    },
+    {
+      "queryId": "P10",
+      "iteration": 1,
+      "embeddingMs": 262.84899999999834,
+      "dbMs": 10.158899999998539,
+      "totalMs": 273.0078999999969,
+      "topIds": [
+        "2f49d1e0-0337-4e76-8405-e1e60a492072",
+        "f65e058e-898e-4d18-8e04-64ea186dadff",
+        "51d9b8e1-9576-4fc0-a966-2c59e67f3bbd",
+        "45e972ac-ce65-47a4-9a95-b8e6ffd3c232",
+        "4c23eb3d-0d6a-4a6d-ae57-806e0c0ef342"
+      ]
+    },
+    {
+      "queryId": "P10",
+      "iteration": 2,
+      "embeddingMs": 342.40320000000065,
+      "dbMs": 6.770199999999022,
+      "totalMs": 349.1733999999997,
+      "topIds": [
+        "2f49d1e0-0337-4e76-8405-e1e60a492072",
+        "f65e058e-898e-4d18-8e04-64ea186dadff",
+        "51d9b8e1-9576-4fc0-a966-2c59e67f3bbd",
+        "45e972ac-ce65-47a4-9a95-b8e6ffd3c232",
+        "4c23eb3d-0d6a-4a6d-ae57-806e0c0ef342"
+      ]
+    },
+    {
+      "queryId": "P10",
+      "iteration": 3,
+      "embeddingMs": 247.8827999999994,
+      "dbMs": 7.0600999999987835,
+      "totalMs": 254.9428999999982,
+      "topIds": [
+        "2f49d1e0-0337-4e76-8405-e1e60a492072",
+        "f65e058e-898e-4d18-8e04-64ea186dadff",
+        "51d9b8e1-9576-4fc0-a966-2c59e67f3bbd",
+        "45e972ac-ce65-47a4-9a95-b8e6ffd3c232",
+        "4c23eb3d-0d6a-4a6d-ae57-806e0c0ef342"
+      ]
+    },
+    {
+      "queryId": "P11",
+      "iteration": 1,
+      "embeddingMs": 251.2693999999974,
+      "dbMs": 6.810800000002928,
+      "totalMs": 258.08020000000033,
+      "topIds": [
+        "reading-n4-01-garbage-rules",
+        "1e81c013-290d-4fc6-85d9-a629ad75040d",
+        "reading-05",
+        "t05-r-p6-134",
+        "t05-r-p6-131"
+      ]
+    },
+    {
+      "queryId": "P11",
+      "iteration": 2,
+      "embeddingMs": 203.53390000000218,
+      "dbMs": 12.285799999997835,
+      "totalMs": 215.8197,
+      "topIds": [
+        "reading-n4-01-garbage-rules",
+        "1e81c013-290d-4fc6-85d9-a629ad75040d",
+        "reading-05",
+        "t05-r-p6-134",
+        "t05-r-p6-131"
+      ]
+    },
+    {
+      "queryId": "P11",
+      "iteration": 3,
+      "embeddingMs": 245.46860000000015,
+      "dbMs": 9.716199999998935,
+      "totalMs": 255.1847999999991,
+      "topIds": [
+        "reading-n4-01-garbage-rules",
+        "1e81c013-290d-4fc6-85d9-a629ad75040d",
+        "reading-05",
+        "t05-r-p6-134",
+        "t05-r-p6-131"
+      ]
+    },
+    {
+      "queryId": "P12",
+      "iteration": 1,
+      "embeddingMs": 421.71020000000135,
+      "dbMs": 7.944199999998091,
+      "totalMs": 429.65439999999944,
+      "topIds": [
+        "reading-n4-06-bank-account-opening",
+        "t03-r-p6-140",
+        "reading-07",
+        "t03-r-p6-141",
+        "t02-r-p7-186"
+      ]
+    },
+    {
+      "queryId": "P12",
+      "iteration": 2,
+      "embeddingMs": 246.9940999999999,
+      "dbMs": 10.92699999999968,
+      "totalMs": 257.92109999999957,
+      "topIds": [
+        "reading-n4-06-bank-account-opening",
+        "t03-r-p6-140",
+        "reading-07",
+        "t03-r-p6-141",
+        "t02-r-p7-186"
+      ]
+    },
+    {
+      "queryId": "P12",
+      "iteration": 3,
+      "embeddingMs": 382.9841000000015,
+      "dbMs": 7.118899999997666,
+      "totalMs": 390.10299999999916,
+      "topIds": [
+        "reading-n4-06-bank-account-opening",
+        "t03-r-p6-140",
+        "reading-07",
+        "t03-r-p6-141",
+        "t02-r-p7-186"
+      ]
+    },
+    {
+      "queryId": "P13",
+      "iteration": 1,
+      "embeddingMs": 241.25209999999788,
+      "dbMs": 8.753199999999197,
+      "totalMs": 250.00529999999708,
+      "topIds": [
+        "reading-n2-04-quiet-carriage",
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "d21b7b87-cfea-4cad-bf77-1e5626ea595d",
+        "508a08f5-43ec-4b05-b4cf-5f9110f7dace",
+        "t04-r-p7-151"
+      ]
+    },
+    {
+      "queryId": "P13",
+      "iteration": 2,
+      "embeddingMs": 261.5041999999994,
+      "dbMs": 9.457099999999627,
+      "totalMs": 270.961299999999,
+      "topIds": [
+        "reading-n2-04-quiet-carriage",
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "d21b7b87-cfea-4cad-bf77-1e5626ea595d",
+        "508a08f5-43ec-4b05-b4cf-5f9110f7dace",
+        "t04-r-p7-151"
+      ]
+    },
+    {
+      "queryId": "P13",
+      "iteration": 3,
+      "embeddingMs": 215.71940000000177,
+      "dbMs": 7.619699999999284,
+      "totalMs": 223.33910000000105,
+      "topIds": [
+        "reading-n2-04-quiet-carriage",
+        "ebdc9fa4-42f6-4296-9746-a7035b639008",
+        "d21b7b87-cfea-4cad-bf77-1e5626ea595d",
+        "508a08f5-43ec-4b05-b4cf-5f9110f7dace",
+        "t04-r-p7-151"
+      ]
+    },
+    {
+      "queryId": "P14",
+      "iteration": 1,
+      "embeddingMs": 228.563900000001,
+      "dbMs": 23.42450000000099,
+      "totalMs": 251.988400000002,
+      "topIds": [
+        "reading-n3-01-repair-cafe",
+        "reading-n4-01-garbage-rules",
+        "t05-l-p4-72",
+        "t08-l-p3-34",
+        "t07-l-p3-59"
+      ]
+    },
+    {
+      "queryId": "P14",
+      "iteration": 2,
+      "embeddingMs": 215.73760000000038,
+      "dbMs": 11.715500000002066,
+      "totalMs": 227.45310000000245,
+      "topIds": [
+        "reading-n3-01-repair-cafe",
+        "reading-n4-01-garbage-rules",
+        "t05-l-p4-72",
+        "t08-l-p3-34",
+        "t07-l-p3-59"
+      ]
+    },
+    {
+      "queryId": "P14",
+      "iteration": 3,
+      "embeddingMs": 194.89040000000023,
+      "dbMs": 7.005600000000413,
+      "totalMs": 201.89600000000064,
+      "topIds": [
+        "reading-n3-01-repair-cafe",
+        "reading-n4-01-garbage-rules",
+        "t05-l-p4-72",
+        "t08-l-p3-34",
+        "t07-l-p3-59"
+      ]
+    },
+    {
+      "queryId": "P15",
+      "iteration": 1,
+      "embeddingMs": 289.3768000000018,
+      "dbMs": 9.208099999999831,
+      "totalMs": 298.58490000000165,
+      "topIds": [
+        "reading-03",
+        "reading-09",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "reading-n5-12-breakfast"
+      ]
+    },
+    {
+      "queryId": "P15",
+      "iteration": 2,
+      "embeddingMs": 228.52160000000003,
+      "dbMs": 7.712999999999738,
+      "totalMs": 236.23459999999977,
+      "topIds": [
+        "reading-03",
+        "reading-09",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "reading-n5-12-breakfast"
+      ]
+    },
+    {
+      "queryId": "P15",
+      "iteration": 3,
+      "embeddingMs": 226.6193000000021,
+      "dbMs": 6.687200000000303,
+      "totalMs": 233.30650000000242,
+      "topIds": [
+        "reading-03",
+        "reading-09",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "reading-n5-12-breakfast"
+      ]
+    },
+    {
+      "queryId": "P16",
+      "iteration": 1,
+      "embeddingMs": 288.2797999999966,
+      "dbMs": 7.577799999999115,
+      "totalMs": 295.8575999999957,
+      "topIds": [
+        "reading-n1-02-public-bench",
+        "t04-r-p7-162",
+        "t06-r-p6-138",
+        "reading-n2-04-quiet-carriage",
+        "t06-r-p6-136"
+      ]
+    },
+    {
+      "queryId": "P16",
+      "iteration": 2,
+      "embeddingMs": 181.78640000000087,
+      "dbMs": 13.386099999999715,
+      "totalMs": 195.17250000000058,
+      "topIds": [
+        "reading-n1-02-public-bench",
+        "t04-r-p7-162",
+        "t06-r-p6-138",
+        "reading-n2-04-quiet-carriage",
+        "t06-r-p6-136"
+      ]
+    },
+    {
+      "queryId": "P16",
+      "iteration": 3,
+      "embeddingMs": 179.41549999999916,
+      "dbMs": 7.4953999999997905,
+      "totalMs": 186.91089999999895,
+      "topIds": [
+        "reading-n1-02-public-bench",
+        "t04-r-p7-162",
+        "t06-r-p6-138",
+        "reading-n2-04-quiet-carriage",
+        "t06-r-p6-136"
+      ]
+    },
+    {
+      "queryId": "P17",
+      "iteration": 1,
+      "embeddingMs": 699.5375999999997,
+      "dbMs": 6.43999999999869,
+      "totalMs": 705.9775999999983,
+      "topIds": [
+        "reading-09",
+        "reading-n5-14-park-letter",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "reading-03",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a"
+      ]
+    },
+    {
+      "queryId": "P17",
+      "iteration": 2,
+      "embeddingMs": 429.3635000000031,
+      "dbMs": 7.15940000000046,
+      "totalMs": 436.5229000000036,
+      "topIds": [
+        "reading-09",
+        "reading-n5-14-park-letter",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "reading-03",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a"
+      ]
+    },
+    {
+      "queryId": "P17",
+      "iteration": 3,
+      "embeddingMs": 183.40730000000258,
+      "dbMs": 7.4289000000026135,
+      "totalMs": 190.8362000000052,
+      "topIds": [
+        "reading-09",
+        "reading-n5-14-park-letter",
+        "702dc643-d273-4b7c-80de-551204356923",
+        "reading-03",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a"
+      ]
+    },
+    {
+      "queryId": "P18",
+      "iteration": 1,
+      "embeddingMs": 256.0167999999976,
+      "dbMs": 9.077499999999418,
+      "totalMs": 265.094299999997,
+      "topIds": [
+        "reading-10",
+        "reading-n2-03-seed-library",
+        "b4df424a-e1a2-4430-8410-e3761057d0c1",
+        "t05-r-p7-149",
+        "a9d04ea7-f413-49fe-a33a-037bb6aec5c9"
+      ]
+    },
+    {
+      "queryId": "P18",
+      "iteration": 2,
+      "embeddingMs": 250.9248000000007,
+      "dbMs": 12.260300000001735,
+      "totalMs": 263.1851000000024,
+      "topIds": [
+        "reading-10",
+        "reading-n2-03-seed-library",
+        "b4df424a-e1a2-4430-8410-e3761057d0c1",
+        "t05-r-p7-149",
+        "a9d04ea7-f413-49fe-a33a-037bb6aec5c9"
+      ]
+    },
+    {
+      "queryId": "P18",
+      "iteration": 3,
+      "embeddingMs": 285.13210000000254,
+      "dbMs": 102.91639999999825,
+      "totalMs": 388.0485000000008,
+      "topIds": [
+        "reading-10",
+        "reading-n2-03-seed-library",
+        "b4df424a-e1a2-4430-8410-e3761057d0c1",
+        "t05-r-p7-149",
+        "a9d04ea7-f413-49fe-a33a-037bb6aec5c9"
+      ]
+    },
+    {
+      "queryId": "P19",
+      "iteration": 1,
+      "embeddingMs": 220.8781999999992,
+      "dbMs": 8.839600000002974,
+      "totalMs": 229.71780000000217,
+      "topIds": [
+        "t07-r-p5-119",
+        "t02-r-p7-174",
+        "t02-r-p7-173",
+        "t02-r-p7-175",
+        "t02-r-p7-172"
+      ]
+    },
+    {
+      "queryId": "P19",
+      "iteration": 2,
+      "embeddingMs": 410.53689999999915,
+      "dbMs": 7.281399999999849,
+      "totalMs": 417.818299999999,
+      "topIds": [
+        "t07-r-p5-119",
+        "t02-r-p7-174",
+        "t02-r-p7-173",
+        "t02-r-p7-175",
+        "t02-r-p7-172"
+      ]
+    },
+    {
+      "queryId": "P19",
+      "iteration": 3,
+      "embeddingMs": 364.4304999999986,
+      "dbMs": 6.620600000002014,
+      "totalMs": 371.0511000000006,
+      "topIds": [
+        "t07-r-p5-119",
+        "t02-r-p7-174",
+        "t02-r-p7-173",
+        "t02-r-p7-175",
+        "t02-r-p7-172"
+      ]
+    },
+    {
+      "queryId": "P20",
+      "iteration": 1,
+      "embeddingMs": 238.19800000000032,
+      "dbMs": 7.972400000002381,
+      "totalMs": 246.1704000000027,
+      "topIds": [
+        "t07-r-p5-129",
+        "t04-r-p5-119",
+        "t02-r-p5-110",
+        "t04-l-p3-38",
+        "t02-r-p7-147"
+      ]
+    },
+    {
+      "queryId": "P20",
+      "iteration": 2,
+      "embeddingMs": 322.1843000000008,
+      "dbMs": 7.049899999998161,
+      "totalMs": 329.23419999999896,
+      "topIds": [
+        "t07-r-p5-129",
+        "t04-r-p5-119",
+        "t02-r-p5-110",
+        "t04-l-p3-38",
+        "t02-r-p7-147"
+      ]
+    },
+    {
+      "queryId": "P20",
+      "iteration": 3,
+      "embeddingMs": 186.55059999999867,
+      "dbMs": 6.874599999999191,
+      "totalMs": 193.42519999999786,
+      "topIds": [
+        "t07-r-p5-129",
+        "t04-r-p5-119",
+        "t02-r-p5-110",
+        "t04-l-p3-38",
+        "t02-r-p7-147"
+      ]
+    },
+    {
+      "queryId": "P21",
+      "iteration": 1,
+      "embeddingMs": 325.34349999999904,
+      "dbMs": 7.34400000000096,
+      "totalMs": 332.6875,
+      "topIds": [
+        "t05-r-p5-130",
+        "t04-r-p5-102",
+        "t03-l-p3-64",
+        "t03-l-p3-63",
+        "t09-l-p4-95"
+      ]
+    },
+    {
+      "queryId": "P21",
+      "iteration": 2,
+      "embeddingMs": 179.93610000000263,
+      "dbMs": 6.950800000002346,
+      "totalMs": 186.88690000000497,
+      "topIds": [
+        "t05-r-p5-130",
+        "t04-r-p5-102",
+        "t03-l-p3-64",
+        "t03-l-p3-63",
+        "t09-l-p4-95"
+      ]
+    },
+    {
+      "queryId": "P21",
+      "iteration": 3,
+      "embeddingMs": 262.7649999999994,
+      "dbMs": 7.004100000001927,
+      "totalMs": 269.76910000000134,
+      "topIds": [
+        "t05-r-p5-130",
+        "t04-r-p5-102",
+        "t03-l-p3-64",
+        "t03-l-p3-63",
+        "t09-l-p4-95"
+      ]
+    },
+    {
+      "queryId": "P22",
+      "iteration": 1,
+      "embeddingMs": 204.62809999999808,
+      "dbMs": 7.3818000000028405,
+      "totalMs": 212.00990000000093,
+      "topIds": [
+        "t04-r-p5-128",
+        "t03-r-p7-168",
+        "t07-r-p7-165",
+        "t03-r-p7-170",
+        "t03-r-p5-124"
+      ]
+    },
+    {
+      "queryId": "P22",
+      "iteration": 2,
+      "embeddingMs": 230.01740000000063,
+      "dbMs": 7.3563000000031025,
+      "totalMs": 237.37370000000374,
+      "topIds": [
+        "t04-r-p5-128",
+        "t03-r-p7-168",
+        "t07-r-p7-165",
+        "t03-r-p7-170",
+        "t03-r-p5-124"
+      ]
+    },
+    {
+      "queryId": "P22",
+      "iteration": 3,
+      "embeddingMs": 296.50320000000283,
+      "dbMs": 8.653699999998935,
+      "totalMs": 305.15690000000177,
+      "topIds": [
+        "t04-r-p5-128",
+        "t03-r-p7-168",
+        "t07-r-p7-165",
+        "t03-r-p7-170",
+        "t03-r-p5-124"
+      ]
+    },
+    {
+      "queryId": "P23",
+      "iteration": 1,
+      "embeddingMs": 313.8112000000001,
+      "dbMs": 8.616400000002614,
+      "totalMs": 322.4276000000027,
+      "topIds": [
+        "t01-r-p7-167",
+        "t01-r-p7-164",
+        "t06-r-p7-169",
+        "t03-l-p3-38",
+        "t06-l-p2-12"
+      ]
+    },
+    {
+      "queryId": "P23",
+      "iteration": 2,
+      "embeddingMs": 158.02220000000307,
+      "dbMs": 6.083499999997002,
+      "totalMs": 164.10570000000007,
+      "topIds": [
+        "t01-r-p7-167",
+        "t01-r-p7-164",
+        "t06-r-p7-169",
+        "t03-l-p3-38",
+        "t06-l-p2-12"
+      ]
+    },
+    {
+      "queryId": "P23",
+      "iteration": 3,
+      "embeddingMs": 196.68870000000243,
+      "dbMs": 6.268100000001141,
+      "totalMs": 202.95680000000357,
+      "topIds": [
+        "t01-r-p7-167",
+        "t01-r-p7-164",
+        "t06-r-p7-169",
+        "t03-l-p3-38",
+        "t06-l-p2-12"
+      ]
+    },
+    {
+      "queryId": "P24",
+      "iteration": 1,
+      "embeddingMs": 159.4284000000007,
+      "dbMs": 6.9804000000003725,
+      "totalMs": 166.40880000000107,
+      "topIds": [
+        "t06-r-p7-175",
+        "t06-r-p7-172",
+        "t06-r-p7-173",
+        "t06-r-p7-174",
+        "t01-r-p6-143"
+      ]
+    },
+    {
+      "queryId": "P24",
+      "iteration": 2,
+      "embeddingMs": 239.25660000000062,
+      "dbMs": 7.605300000002899,
+      "totalMs": 246.86190000000352,
+      "topIds": [
+        "t06-r-p7-175",
+        "t06-r-p7-172",
+        "t06-r-p7-173",
+        "t06-r-p7-174",
+        "t01-r-p6-143"
+      ]
+    },
+    {
+      "queryId": "P24",
+      "iteration": 3,
+      "embeddingMs": 157.40239999999903,
+      "dbMs": 7.577000000001135,
+      "totalMs": 164.97940000000017,
+      "topIds": [
+        "t06-r-p7-175",
+        "t06-r-p7-172",
+        "t06-r-p7-173",
+        "t06-r-p7-174",
+        "t01-r-p6-143"
+      ]
+    },
+    {
+      "queryId": "P25",
+      "iteration": 1,
+      "embeddingMs": 424.1286,
+      "dbMs": 9.61409999999887,
+      "totalMs": 433.7426999999989,
+      "topIds": [
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-r-p7-159",
+        "b0d26d9f-a1f6-4008-ba3d-5be5d5dec17c",
+        "844c07c5-1c13-42ba-ad0a-6dccf4ea4c4c"
+      ]
+    },
+    {
+      "queryId": "P25",
+      "iteration": 2,
+      "embeddingMs": 262.6381999999976,
+      "dbMs": 13.216099999997823,
+      "totalMs": 275.8542999999954,
+      "topIds": [
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-r-p7-159",
+        "b0d26d9f-a1f6-4008-ba3d-5be5d5dec17c",
+        "844c07c5-1c13-42ba-ad0a-6dccf4ea4c4c"
+      ]
+    },
+    {
+      "queryId": "P25",
+      "iteration": 3,
+      "embeddingMs": 247.58829999999944,
+      "dbMs": 10.077099999998609,
+      "totalMs": 257.66539999999804,
+      "topIds": [
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4",
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-r-p7-159",
+        "b0d26d9f-a1f6-4008-ba3d-5be5d5dec17c",
+        "844c07c5-1c13-42ba-ad0a-6dccf4ea4c4c"
+      ]
+    },
+    {
+      "queryId": "P26",
+      "iteration": 1,
+      "embeddingMs": 150.22589999999764,
+      "dbMs": 7.927400000000489,
+      "totalMs": 158.15329999999813,
+      "topIds": [
+        "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+        "6faaaa8c-c7e0-4ae4-9570-629ce10f7e16",
+        "f80bcce9-98fd-47f2-b56f-4e6f4022702a",
+        "48c9b6be-1fbd-4152-abe7-fb5fe6e750bd",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90"
+      ]
+    },
+    {
+      "queryId": "P26",
+      "iteration": 2,
+      "embeddingMs": 422.05509999999776,
+      "dbMs": 8.111499999999069,
+      "totalMs": 430.16659999999683,
+      "topIds": [
+        "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+        "6faaaa8c-c7e0-4ae4-9570-629ce10f7e16",
+        "f80bcce9-98fd-47f2-b56f-4e6f4022702a",
+        "48c9b6be-1fbd-4152-abe7-fb5fe6e750bd",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90"
+      ]
+    },
+    {
+      "queryId": "P26",
+      "iteration": 3,
+      "embeddingMs": 193.57749999999942,
+      "dbMs": 10.008699999998498,
+      "totalMs": 203.58619999999792,
+      "topIds": [
+        "0e773ee5-eeb7-4451-b395-63bb163d2c2c",
+        "6faaaa8c-c7e0-4ae4-9570-629ce10f7e16",
+        "f80bcce9-98fd-47f2-b56f-4e6f4022702a",
+        "48c9b6be-1fbd-4152-abe7-fb5fe6e750bd",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90"
+      ]
+    },
+    {
+      "queryId": "P27",
+      "iteration": 1,
+      "embeddingMs": 270.39080000000104,
+      "dbMs": 7.717099999998027,
+      "totalMs": 278.10789999999906,
+      "topIds": [
+        "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+        "3bcbb552-8d67-4384-8ab8-ec523cce04a6",
+        "d7aee1ee-a37f-42fa-b71f-54a39213c32d",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9"
+      ]
+    },
+    {
+      "queryId": "P27",
+      "iteration": 2,
+      "embeddingMs": 280.34379999999874,
+      "dbMs": 9.987900000000081,
+      "totalMs": 290.3316999999988,
+      "topIds": [
+        "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+        "3bcbb552-8d67-4384-8ab8-ec523cce04a6",
+        "d7aee1ee-a37f-42fa-b71f-54a39213c32d",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9"
+      ]
+    },
+    {
+      "queryId": "P27",
+      "iteration": 3,
+      "embeddingMs": 218.89589999999953,
+      "dbMs": 7.105099999997037,
+      "totalMs": 226.00099999999657,
+      "topIds": [
+        "9b98c78a-0632-42f3-bb3a-f482790f1bd5",
+        "3bcbb552-8d67-4384-8ab8-ec523cce04a6",
+        "d7aee1ee-a37f-42fa-b71f-54a39213c32d",
+        "6c661623-38ea-4ce1-a1d6-920cc4ab4666",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9"
+      ]
+    },
+    {
+      "queryId": "N01",
+      "iteration": 1,
+      "embeddingMs": 188.5867999999973,
+      "dbMs": 6.423500000000786,
+      "totalMs": 195.0102999999981,
+      "topIds": [
+        "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+        "75b4ab6e-2821-4bd4-b985-c66414127be3",
+        "2835da7e-e3cb-434a-b0dd-f941b4cfcefe",
+        "eaa78b54-488d-4bf5-b2ed-f63d6d3aa3ef",
+        "547a5f3a-5a01-4046-a44c-ec18bdb0d469"
+      ]
+    },
+    {
+      "queryId": "N01",
+      "iteration": 2,
+      "embeddingMs": 197.0054999999993,
+      "dbMs": 6.48240000000078,
+      "totalMs": 203.48790000000008,
+      "topIds": [
+        "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+        "75b4ab6e-2821-4bd4-b985-c66414127be3",
+        "2835da7e-e3cb-434a-b0dd-f941b4cfcefe",
+        "eaa78b54-488d-4bf5-b2ed-f63d6d3aa3ef",
+        "547a5f3a-5a01-4046-a44c-ec18bdb0d469"
+      ]
+    },
+    {
+      "queryId": "N01",
+      "iteration": 3,
+      "embeddingMs": 479.95660000000134,
+      "dbMs": 8.013999999999214,
+      "totalMs": 487.97060000000056,
+      "topIds": [
+        "5bc4f15e-1ea7-47af-8d53-2b2a5adf2e16",
+        "75b4ab6e-2821-4bd4-b985-c66414127be3",
+        "2835da7e-e3cb-434a-b0dd-f941b4cfcefe",
+        "eaa78b54-488d-4bf5-b2ed-f63d6d3aa3ef",
+        "547a5f3a-5a01-4046-a44c-ec18bdb0d469"
+      ]
+    },
+    {
+      "queryId": "N02",
+      "iteration": 1,
+      "embeddingMs": 283.4119999999966,
+      "dbMs": 31.03399999999965,
+      "totalMs": 314.4459999999963,
+      "topIds": [
+        "reading-09",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "e5be3bc5-3ce6-4056-bd8a-21a4f0532169"
+      ]
+    },
+    {
+      "queryId": "N02",
+      "iteration": 2,
+      "embeddingMs": 190.09920000000056,
+      "dbMs": 9.981599999999162,
+      "totalMs": 200.08079999999973,
+      "topIds": [
+        "reading-09",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "e5be3bc5-3ce6-4056-bd8a-21a4f0532169"
+      ]
+    },
+    {
+      "queryId": "N02",
+      "iteration": 3,
+      "embeddingMs": 401.4116999999969,
+      "dbMs": 9.042600000000675,
+      "totalMs": 410.4542999999976,
+      "topIds": [
+        "reading-09",
+        "111c3a97-8bfd-4862-b2b6-501582b64e90",
+        "2b8197af-01b5-434f-b48c-44c01280bf3a",
+        "438b1e49-41b9-434c-a965-fe9c491fb2a5",
+        "e5be3bc5-3ce6-4056-bd8a-21a4f0532169"
+      ]
+    },
+    {
+      "queryId": "N03",
+      "iteration": 1,
+      "embeddingMs": 198.49290000000474,
+      "dbMs": 9.322199999995064,
+      "totalMs": 207.8150999999998,
+      "topIds": [
+        "reading-08",
+        "t08-r-p7-192",
+        "t08-r-p7-191",
+        "t08-r-p7-195",
+        "t08-r-p7-194"
+      ]
+    },
+    {
+      "queryId": "N03",
+      "iteration": 2,
+      "embeddingMs": 226.0688999999984,
+      "dbMs": 8.080900000000838,
+      "totalMs": 234.14979999999923,
+      "topIds": [
+        "reading-08",
+        "t08-r-p7-192",
+        "t08-r-p7-191",
+        "t08-r-p7-195",
+        "t08-r-p7-194"
+      ]
+    },
+    {
+      "queryId": "N03",
+      "iteration": 3,
+      "embeddingMs": 193.34369999999763,
+      "dbMs": 7.216000000000349,
+      "totalMs": 200.55969999999797,
+      "topIds": [
+        "reading-08",
+        "t08-r-p7-192",
+        "t08-r-p7-191",
+        "t08-r-p7-195",
+        "t08-r-p7-194"
+      ]
+    },
+    {
+      "queryId": "N04",
+      "iteration": 1,
+      "embeddingMs": 170.34990000000107,
+      "dbMs": 7.205399999998917,
+      "totalMs": 177.5553,
+      "topIds": [
+        "t04-l-p2-27",
+        "t04-l-p2-25",
+        "t04-l-p4-75",
+        "t04-l-p2-14",
+        "t07-l-p4-87"
+      ]
+    },
+    {
+      "queryId": "N04",
+      "iteration": 2,
+      "embeddingMs": 195.64719999999943,
+      "dbMs": 7.094600000003993,
+      "totalMs": 202.74180000000342,
+      "topIds": [
+        "t04-l-p2-27",
+        "t04-l-p2-25",
+        "t04-l-p4-75",
+        "t04-l-p2-14",
+        "t07-l-p4-87"
+      ]
+    },
+    {
+      "queryId": "N04",
+      "iteration": 3,
+      "embeddingMs": 309.6979000000065,
+      "dbMs": 7.100500000000466,
+      "totalMs": 316.79840000000695,
+      "topIds": [
+        "t04-l-p2-27",
+        "t04-l-p2-25",
+        "t04-l-p4-75",
+        "t04-l-p2-14",
+        "t07-l-p4-87"
+      ]
+    },
+    {
+      "queryId": "N05",
+      "iteration": 1,
+      "embeddingMs": 418.8868000000002,
+      "dbMs": 7.026700000002165,
+      "totalMs": 425.9135000000024,
+      "topIds": [
+        "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+        "5960f42b-15da-4b4a-b48c-0a4578d97b90",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-139",
+        "f8e2f839-f294-4d58-bc2e-013a31e45513"
+      ]
+    },
+    {
+      "queryId": "N05",
+      "iteration": 2,
+      "embeddingMs": 172.09949999999662,
+      "dbMs": 8.645300000003772,
+      "totalMs": 180.7448000000004,
+      "topIds": [
+        "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+        "5960f42b-15da-4b4a-b48c-0a4578d97b90",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-139",
+        "f8e2f839-f294-4d58-bc2e-013a31e45513"
+      ]
+    },
+    {
+      "queryId": "N05",
+      "iteration": 3,
+      "embeddingMs": 165.15020000000368,
+      "dbMs": 7.77900000000227,
+      "totalMs": 172.92920000000595,
+      "topIds": [
+        "2cfef18b-ed93-4c5b-85d3-9d996852b42b",
+        "5960f42b-15da-4b4a-b48c-0a4578d97b90",
+        "2a73292f-b30c-460f-b5fa-3e1c0c8236a9",
+        "t03-r-p6-139",
+        "f8e2f839-f294-4d58-bc2e-013a31e45513"
+      ]
+    },
+    {
+      "queryId": "U01",
+      "iteration": 1,
+      "embeddingMs": 239.81589999999414,
+      "dbMs": 23.564900000004855,
+      "totalMs": 263.380799999999,
+      "topIds": [
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-l-p1-04",
+        "t04-l-p1-01",
+        "d6efb8b9-31e7-47ad-9c34-8952e1a32d81",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ]
+    },
+    {
+      "queryId": "U01",
+      "iteration": 2,
+      "embeddingMs": 321.6921000000002,
+      "dbMs": 7.209000000002561,
+      "totalMs": 328.90110000000277,
+      "topIds": [
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-l-p1-04",
+        "t04-l-p1-01",
+        "d6efb8b9-31e7-47ad-9c34-8952e1a32d81",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ]
+    },
+    {
+      "queryId": "U01",
+      "iteration": 3,
+      "embeddingMs": 294.78899999999703,
+      "dbMs": 5.47110000000248,
+      "totalMs": 300.2600999999995,
+      "topIds": [
+        "9c6cb2d9-8407-4362-a871-bc358ccbae82",
+        "t01-l-p1-04",
+        "t04-l-p1-01",
+        "d6efb8b9-31e7-47ad-9c34-8952e1a32d81",
+        "cf5b5192-af85-4614-8b50-8f65db34ecc4"
+      ]
+    }
+  ],
+  "honestyNotes": [
+    "Groundedness TIDAK reproducible: judge jev/systemone non-deterministik pada input identik (terverifikasi noul 0.930 vs <0.5 untuk chunk yang sama). Laporkan sebagai rentang antar-run.",
+    "Label N02/N06/U01 salah: dataset memverifikasi ketiadaan via string literal Jepang, padahal korpus memuat jawabannya (chunk cf5b5192, 6faaaa8c, 9b98c78a). Setelah dikoreksi: groundedness 90.32%, false-grounding 0%.",
+    "n=24 kueri positif: Wilson 95% CI masih lebar.",
+    "Ketersediaan judge intermittent: systemone sempat 404 setelah 114.6s; jev-1.13 timeout; openjev 503."
+  ]
+}
