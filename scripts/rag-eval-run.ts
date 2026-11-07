@@ -307,7 +307,7 @@ async function main() {
     console.log(`Korpus pgvector   : ${corpusCount.count} chunk riil (lesson_materials + reading_articles + toeic_questions)`);
     console.log(`Kueri evaluasi    : ${EVAL_QUERIES.length} (24 positive, 6 negative, 1 unanswerable)`);
     console.log(`Iterasi latency   : ${ITERATIONS}× per kueri = ${EVAL_QUERIES.length * ITERATIONS} sampel`);
-    console.log(`Embedding model   : gemini-embedding-001 (${DIMS} dim) via API langsung`);
+    console.log(`Embedding model   : BGE-M3 (${DIMS} dim) via Cloudflare Workers AI`);
     console.log("");
 
     // ── 1. Validasi judge lewat control set ────────────────────────────────
@@ -618,7 +618,7 @@ async function main() {
         unanswerable: negatives.filter((q) => q.kind === "unanswerable").length,
         nearMiss: nearMiss.length,
         iterations: ITERATIONS,
-        embeddingModel: "gemini-embedding-001 (768d)",
+        embeddingModel: "Cloudflare BGE-M3 (768d)",
         judgeModel,
         judgeValidated,
         controlAccuracy,
